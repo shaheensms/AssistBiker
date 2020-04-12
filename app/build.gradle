@@ -36,4 +36,20 @@ dependencies {
     // Pin View
     implementation 'com.chaos.view:pinview:1.4.3'
     implementation 'com.google.android.material:material:1.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.Deishelon:RoundedBottomSheet:1.0.1'
+    implementation 'com.github.tiper:MaterialSpinner:1.4.1'
+    implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
+    // glide loader
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    // shimmer view
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'// converts json to a java object
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0' // simple http client
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
 }

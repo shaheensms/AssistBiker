@@ -54,6 +54,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
             android:layout_marginBottom="4dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email Address" />
@@ -69,6 +70,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:id="@+id/pass"
                 android:layout_height="wrap_content"
                 android:hint="Password" />
 
@@ -110,6 +112,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:id="@+id/loginBtn"
             android:text="Login to my account" />
 
     </LinearLayout>
