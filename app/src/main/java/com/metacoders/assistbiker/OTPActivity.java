@@ -120,6 +120,7 @@ public class OTPActivity extends AppCompatActivity {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null)
             {
+                pinView.setOTP(code);
                 verifyCode(code);
 
             }
@@ -127,6 +128,7 @@ public class OTPActivity extends AppCompatActivity {
             {
 
               //  progressBar.setVisibility(View.INVISIBLE);
+
                 Toast.makeText(getApplicationContext(),"Error: wrong Code  ", Toast.LENGTH_LONG).show();
 
             }
