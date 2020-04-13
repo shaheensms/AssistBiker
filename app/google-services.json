@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "488292210334",
+    "firebase_url": "https://assist-biker.firebaseio.com",
+    "project_id": "assist-biker",
+    "storage_bucket": "assist-biker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488292210334:android:4f21f194eab608dd7c0d8f",
+        "android_client_info": {
+          "package_name": "com.metacoders.assistbiker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488292210334-euqdgherrakbllp8ptv3g2515fnecog6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metacoders.assistbiker",
+            "certificate_hash": "e7134e9e771c4552820851631487affe4d0ba29b"
+          }
+        },
+        {
+          "client_id": "488292210334-fdpiej1jie39uv4sk78b4309k6umtul7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYuw1vTVSfAG1-CQ7XUCfUncp_Ty6fclw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488292210334-fdpiej1jie39uv4sk78b4309k6umtul7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

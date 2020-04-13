@@ -2,6 +2,7 @@ package com.metacoders.assistbiker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,12 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.DecimalMax;
+import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.Max;
+import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
@@ -23,10 +29,14 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
     @Email
     private TextInputEditText mailIn;
     @NotEmpty
-    private TextInputEditText nameIn , mobileIn;
+    private TextInputEditText nameIn ;
 
     @NotEmpty
-    @Password(min = 3, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
+    @Length(min = 11   , max = 11  , message =  "Please Use Proper Phone Number")
+    private TextInputEditText mobileIn ;
+
+    @NotEmpty
+    @Password(min = 3, scheme = Password.Scheme.ANY)
     private TextInputEditText passIn;
 
     Validator validator ;
@@ -64,7 +74,18 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
     @Override
     public void onValidationSucceeded() {
 
-        Toast.makeText(this, "message", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext() , mobileIn.getText(), Toast.LENGTH_SHORT)
+//                .show();
+
+
+
+        Intent i = new Intent( getApplicationContext() ,  OTPActivity.class) ;
+        i.putExtra("NAME",nameIn.getText().toString() ) ;
+        i.putExtra("PASS",passIn.getText().toString() ) ;
+        i.putExtra("MAIL",mailIn.getText().toString() ) ;
+        i.putExtra("NUM",mobileIn.getText().toString()  ) ;
+        startActivity(i);
+
     }
 
     @Override

@@ -12,15 +12,37 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="64dp"
-        android:text="Enter 4 Digit Code that sent  to your phone"
+        android:text="Enter 6 Digit Code that sent  to your phone"
         android:textSize="24sp" />
 
-    <com.chaos.view.PinView
-        app:itemCount="4"
+    <in.aabhasjindal.otptextview.OtpTextView
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:id="@+id/otp_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_gravity="center" />
+        android:textColor="@color/colorPrimary"
+        app:height="45dp"
+        app:width="40dp"
+        app:bar_enabled="false"
+        app:bar_height="2dp"
+        app:length="6"
+        app:otp_box_background="@drawable/otp_box_active"
+        app:otp=""
+        app:bar_margin_left="5dp"
+        app:bar_active_color="@color/colorPrimary"
+        app:otp_text_size="24dp"/>
+
+    <Button
+        android:id="@+id/signUPBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Sign Up" />
 
 
 </LinearLayout>
