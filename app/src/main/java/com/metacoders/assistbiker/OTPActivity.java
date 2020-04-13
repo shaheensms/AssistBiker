@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.metacoders.assistbiker.Utils.Utilities;
@@ -107,37 +108,36 @@ public class OTPActivity extends AppCompatActivity {
 
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
-            mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            mCallBack  = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        @Override
+        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+           // This callback will be invoked in two situations:
+            // 1 - Instant verification. In some cases the phone number can be instantly
+            //     verified without needing to send or enter a verification code.
+            // 2 - Auto-retrieval. On some devices Google Play services can automatically
+            //     detect the incoming verification SMS and perform verification without
+            //     user action.
+
+            pinView.setOTP(phoneAuthCredential.getSmsCode());
+
+            signInWithPhoneAuthCredentials(phoneAuthCredential);
+        }
+
+
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onVerificationFailed(@NonNull FirebaseException e) {
+
+            Toast.makeText(getApplicationContext(),"verification Failed",Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+
+            verificationid = s  ;
             super.onCodeSent(s, forceResendingToken);
-            verificationid = s;
-        }
+            verificationid = s  ;
 
-        @Override
-        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-            String code = phoneAuthCredential.getSmsCode();
-            if (code != null)
-            {
-                pinView.setOTP(code);
-                verifyCode(code);
-
-            }
-            else
-            {
-
-              //  progressBar.setVisibility(View.INVISIBLE);
-
-                Toast.makeText(getApplicationContext(),"Error: wrong Code  ", Toast.LENGTH_LONG).show();
-
-            }
-        }
-
-        @Override
-        public void onVerificationFailed(FirebaseException e) {
-        //    progressBar.setVisibility(View.INVISIBLE);
-            Toast.makeText(OTPActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
 
 
         }
@@ -146,7 +146,7 @@ public class OTPActivity extends AppCompatActivity {
     private void verifyCode(String code){
         try {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid, code);
-            signInWithCredential(credential);
+            signInWithPhoneAuthCredentials(credential);
         }catch (Exception e){
             Toast toast = Toast.makeText(this, "Verification Code is wrong", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER,0,0);
@@ -154,31 +154,36 @@ public class OTPActivity extends AppCompatActivity {
         }
     }
 
-    private void signInWithCredential(PhoneAuthCredential credential) {
+
+    private void signInWithPhoneAuthCredentials(PhoneAuthCredential credential){
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(OTPActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()){
+
+                            Toasty.success(getApplicationContext(),"SUCC " ,Toasty.LENGTH_LONG).show();
 
 
-                            Toasty.success(OTPActivity.this , "NUMBER VERIFIED !!" , Toasty.LENGTH_LONG).show();
 
-                            // now Upload The  User Data
-
-//                            Intent intent = new Intent(OTPActivity.this, homePage.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            startActivity(intent);
-//                            finish();
-
+                        }else {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
+                                Toast.makeText(getApplicationContext(),"error In verifying OTP",Toast.LENGTH_LONG).show();
+                            }
                         }
-                        else {
 
-                            Toast.makeText(OTPActivity.this,"Eror: "+ task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
                     }
-
                 });
     }
 
+
+
 }
+
+
+
+
+
+
+
+
