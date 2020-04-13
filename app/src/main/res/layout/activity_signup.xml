@@ -48,7 +48,9 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
+                        android:id="@+id/name"
                         android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
                         android:hint="Enter your name" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -63,6 +65,8 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:id="@+id/mail"
                         android:hint="Enter your Email" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -75,12 +79,29 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/pass"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password" />
+                        android:hint="Password"
+                        android:inputType="textPassword" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:id="@+id/ph"
+                        android:hint="Phone Number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
 
@@ -88,6 +109,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
         </LinearLayout>
 
     <Button
+        android:id="@+id/signUPBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

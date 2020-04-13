@@ -134,6 +134,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:layout_marginLeft="2dp"
+            android:id="@+id/registerBtn"
             android:text="Register Now" />
     </LinearLayout>
 
