@@ -162,7 +162,7 @@ public class OTPActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
 
-                            Toasty.success(getApplicationContext(),"SUCC " ,Toasty.LENGTH_LONG).show();
+                            Toasty.success(getApplicationContext(),"SUCCEED !!!!!!!!! " ,Toasty.LENGTH_LONG).show();
 
 
 
