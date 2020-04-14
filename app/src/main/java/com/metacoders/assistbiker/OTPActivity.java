@@ -3,14 +3,19 @@ package com.metacoders.assistbiker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -21,11 +26,18 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.metacoders.assistbiker.Utils.Utilities;
+import com.metacoders.assistbiker.api.api;
+import com.metacoders.assistbiker.models.Response_register;
+import com.metacoders.assistbiker.models.Sent_Response_register;
+import com.metacoders.assistbiker.requests.ServiceGenerator;
 
 import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
 import in.aabhasjindal.otptextview.OtpTextView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OTPActivity extends AppCompatActivity {
 
@@ -38,6 +50,7 @@ public class OTPActivity extends AppCompatActivity {
     FirebaseAuth mAuth ;
     private String verificationid;
     Button registerBtn ;
+    Dialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,11 +141,13 @@ public class OTPActivity extends AppCompatActivity {
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
 
-            Toast.makeText(getApplicationContext(),"verification Failed",Toast.LENGTH_LONG).show();
+
+            Toasty.error(getApplicationContext(),"verification Failed  "  + e.getMessage() + " Try Again !!",Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+
 
             verificationid = s  ;
             super.onCodeSent(s, forceResendingToken);
@@ -148,9 +163,9 @@ public class OTPActivity extends AppCompatActivity {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationid, code);
             signInWithPhoneAuthCredentials(credential);
         }catch (Exception e){
-            Toast toast = Toast.makeText(this, "Verification Code is wrong", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER,0,0);
-            toast.show();
+
+            Toasty.error(OTPActivity.this, "Verification Code is wrong", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -162,11 +177,15 @@ public class OTPActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
 
-                            Toasty.success(getApplicationContext(),"SUCCEED !!!!!!!!! " ,Toasty.LENGTH_LONG).show();
+
+                            RegisterNewUser() ;
+
+                           // Toasty.success(getApplicationContext(),"SUCCEED !!!!!!!!! " ,Toasty.LENGTH_LONG).show();
 
 
 
                         }else {
+
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
                                 Toast.makeText(getApplicationContext(),"error In verifying OTP",Toast.LENGTH_LONG).show();
                             }
@@ -174,6 +193,90 @@ public class OTPActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void RegisterNewUser() {
+
+
+        triggerDialouge(); // showing the new user
+
+        api  api = ServiceGenerator.AllApi() ;
+
+        // build the model
+//String customer_email, String customer_pass, String customer_contact, String customer_contact2, String customer_image, String customer_name, String customer_address
+        Sent_Response_register response_register = new Sent_Response_register( mail  , pass , num , "null" , "null" , name , "null");
+
+        Call<Response_register> RegisterCall = api.postUserRegister(response_register) ;
+
+        RegisterCall.enqueue(new Callback<Response_register>() {
+            @Override
+            public void onResponse(Call<Response_register> call, Response<Response_register> response) {
+
+
+                if(response.code() ==200)
+                {
+
+                    // check the response
+
+                    Response_register resp = response.body();
+
+                    if(resp.getMsg().equals("successfull"))
+                    {
+                        String userID =  resp.getData() ;
+
+                        dialog.dismiss();
+                        Toasty.success(getApplicationContext() , "Users Registers User ID - " + userID  , Toasty.LENGTH_LONG)
+                                .show();
+
+                    }
+                    else
+                  {
+                        RegisterNewUser();
+                    }
+
+
+
+                }
+                else
+                 {
+                     // request again
+                     RegisterNewUser();
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Response_register> call, Throwable t) {
+                // failed request again
+                RegisterNewUser();
+
+
+            }
+        });
+
+
+
+
+
+    }
+
+    private  void  triggerDialouge()
+    {
+
+        dialog = new Dialog(OTPActivity.this );
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.otp_dialouge);
+
+        TextView dialogueTitle = dialog.findViewById(R.id.progressTitle) ;
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+
+
     }
 
 
