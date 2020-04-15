@@ -1,11 +1,11 @@
 package com.metacoders.assistbiker.api;
 
+import com.metacoders.assistbiker.models.NewsFeedModel;
 import com.metacoders.assistbiker.models.Response_login;
 import com.metacoders.assistbiker.models.Response_register;
 import com.metacoders.assistbiker.models.Sent_Response_login;
 import com.metacoders.assistbiker.models.Sent_Response_register;
 import com.metacoders.assistbiker.models.testModel;
-
 
 import java.util.List;
 
@@ -22,8 +22,7 @@ public interface api {
     Call<Response_login>postUserLoagin(@Body Sent_Response_login body ) ;
     @POST("customers/create")
     Call<Response_register>postUserRegister(@Body Sent_Response_register body ) ;
-
-
-
+    @GET("customers/newsfeed")
+    Call<List<NewsFeedModel>> getNewsFeed ();
 
 }
