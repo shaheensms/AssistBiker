@@ -3,9 +3,11 @@ package com.metacoders.assistbiker.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +46,32 @@ public class fragment_newsfeed extends Fragment {
         trendRecyclerView.setHasFixedSize(true);
 
 
+        trendRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                int action = e.getAction();
+                // Toast.makeText(getActivity(),"HERE",Toast.LENGTH_SHORT).show();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        rv.getParent().requestDisallowInterceptTouchEvent(true);
+
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
+
         return view;
     }
 
@@ -65,8 +93,9 @@ public class fragment_newsfeed extends Fragment {
                         newsRecyclerView.setAdapter(adapter);
 
                         adapter = new NewsTrendAdapter(getActivity(), newsfeedList);
-                        linearLayoutManager = new LinearLayoutManager(getContext(), linearLayoutManager.HORIZONTAL, false );
+                        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         trendRecyclerView.setLayoutManager(linearLayoutManager);
+                        trendRecyclerView.setNestedScrollingEnabled(true);
                         trendRecyclerView.setAdapter(adapter);
 
 

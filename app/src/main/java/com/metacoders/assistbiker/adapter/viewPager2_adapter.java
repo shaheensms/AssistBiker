@@ -10,7 +10,7 @@ import com.metacoders.assistbiker.fragments.fragment_products;
 
 public class viewPager2_adapter extends FragmentStateAdapter {
 
-    private String[] titles = new String[]{"Newsfeed", "Products", "something"};
+    private String[] titles = new String[]{"Home", "Products", "Cart"};
 
     public viewPager2_adapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);

@@ -12,14 +12,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.homePageActivity">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="116dp"
+            android:layout_marginEnd="45dp"
+            app:elevation="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/fuel"
+            app:backgroundTint="@color/red"
+            app:tint="@null"
+            app:fabSize="auto"
+            app:maxImageSize="28dp"
+            app:rippleColor="@color/black"
+
+
+            />
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
+            android:layout_centerInParent="false"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="56dp"
             android:layout_alignBottom="@+id/bottom_navigation_"
+            android:layout_alignParentTop="true"
             />
 
 
@@ -31,6 +56,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
+
             android:background="@color/colorPrimary"
             app:itemIconTint="@drawable/nav_text_selector"
             app:itemTextColor="@drawable/nav_text_selector"
@@ -39,13 +65,17 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/nav_menu" />
+
+
     </RelativeLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:theme="@style/BottomNavigationViewStyle"
         android:layout_gravity="start"
         android:background="@color/white"
         app:itemTextColor="@color/black"
+        android:layout_alignParentEnd="true"
         />
 </androidx.drawerlayout.widget.DrawerLayout>

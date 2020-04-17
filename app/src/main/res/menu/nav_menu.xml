@@ -4,18 +4,18 @@
         android:id="@+id/newsfeed"
         android:icon="@drawable/ic_bike_black_24dp"
         android:iconTint="@color/white"
-        android:title="newsfeed"
+        android:title="Newsfeed"
         />
     <item
         android:id="@+id/products"
         android:icon="@drawable/ic_arrow_drop_up"
-        android:title="products"
+        android:title="Products"
 
         />
     <item
         android:id="@+id/favorites"
         android:icon="@drawable/ic_bike_black_24dp"
-        android:title="Favorites"
+        android:title="Cart"
         />
 
 </menu>

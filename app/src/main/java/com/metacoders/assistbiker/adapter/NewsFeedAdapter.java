@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.NewsFeedModel;
 
@@ -46,6 +47,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         Glide.with(ctx)
                 .load(newsFeed.getImage())
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
 

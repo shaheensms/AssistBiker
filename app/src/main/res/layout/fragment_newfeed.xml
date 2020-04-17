@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-<ScrollView
+<androidx.core.widget.NestedScrollView
+    android:fitsSystemWindows="true"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
         <TextView
             android:id="@+id/textView2"
@@ -42,11 +46,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical" />
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>
