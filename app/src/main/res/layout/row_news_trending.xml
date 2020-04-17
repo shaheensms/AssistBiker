@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    android:layout_width="192dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
     android:layout_margin="4dp"
@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/news_imageview"
                     android:layout_width="wrap_content"
-                    android:layout_height="192dp"
+                    android:layout_height="128dp"
                     android:contentDescription="@string/placeholer_image"
                     android:scaleType="centerCrop"
                     android:src="@drawable/placeholder"
@@ -58,7 +58,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/news_imageview" />-->
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/news_price_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />-->
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -98,25 +98,27 @@
                     android:id="@+id/news_title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:maxLines="3"
-                    android:textStyle="bold"
+                    android:textColor="@color/colorTextHeading"
+                    android:textFontWeight="200"
+                    android:maxLines="2"
                     android:text="John Doe" />
-                
 
             </LinearLayout>
 
 
 
             <TextView
-                android:id="@+id/news_description_tv"
+                android:id="@+id/news_price_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorGreen"
                 android:maxLines="1"
-                android:text="@string/dummy_text" />
+                android:text="$120" />
 
             <!--<LinearLayout
                 android:layout_width="match_parent"

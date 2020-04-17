@@ -39,8 +39,8 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
         NewsFeedModel newsFeed = newsfeedList.get(position);
 
         holder.title.setText(newsFeed.getTitle());
-        holder.price.setText(newsFeed.getProduct_price().toString());
-        holder.description.setText(newsFeed.getDescription());
+        holder.price.setText("$" + newsFeed.getProduct_price().toString());
+//        holder.description.setText(newsFeed.getDescription());
 
         Glide.with(ctx)
                 .load(newsFeed.getImage())
@@ -59,7 +59,7 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
 
         public TextView title;
         public ImageView image;
-        public TextView description;
+//        public TextView description;
         public TextView price;
 
         public ViewHolder(@NonNull View itemView) {
@@ -69,7 +69,7 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
 
             title = itemView.findViewById(R.id.news_title_tv);
             image = itemView.findViewById(R.id.news_imageview);
-            description = itemView.findViewById(R.id.news_description_tv);
+//            description = itemView.findViewById(R.id.news_description_tv);
             price = itemView.findViewById(R.id.news_price_tv);
 
         }

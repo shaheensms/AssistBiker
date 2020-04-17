@@ -41,7 +41,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         NewsFeedModel newsFeed = newsfeedList.get(position);
 
         holder.title.setText(newsFeed.getTitle());
-        holder.price.setText(newsFeed.getProduct_price().toString());
+        holder.price.setText("$" + newsFeed.getProduct_price().toString());
         holder.description.setText(newsFeed.getDescription());
 
         Glide.with(ctx)

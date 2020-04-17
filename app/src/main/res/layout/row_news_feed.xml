@@ -70,7 +70,7 @@
                     android:gravity="center_horizontal"
                     android:padding="8dp"
                     android:text="$500000"
-                    android:textColor="#61AF65"
+                    android:textColor="@color/colorGreen"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
                     android:layout_weight="1"
                     android:maxLines="3"
                     android:text="John Doe"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorTextHeading"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -115,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLines="2"
+                android:textColor="@color/colorTextHeading"
                 android:text="@string/dummy_text"
                 android:textSize="16sp" />
 
@@ -130,6 +131,8 @@
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
                     android:text="20-02-2020"
+                    android:drawableTint="@color/colorTextHeading"
+                    android:textColor="@color/colorTextHeading"
                     app:chipIcon="@drawable/ic_date_range_black_24dp" />
 
                 <com.google.android.material.chip.Chip
@@ -139,6 +142,8 @@
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
                     android:text="Share"
+                    android:textColor="@color/colorTextHeading"
+                    android:drawableTint="@color/colorTextHeading"
                     app:chipIcon="@drawable/ic_share_black_24dp" />
 
                 <View
