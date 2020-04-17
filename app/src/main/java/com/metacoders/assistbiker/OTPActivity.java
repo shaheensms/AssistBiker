@@ -56,6 +56,7 @@ public class OTPActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
+        getSupportActionBar().hide();
         utilities = new Utilities() ;
         mAuth = FirebaseAuth.getInstance() ;
         Intent o  = getIntent();
@@ -227,6 +228,10 @@ public class OTPActivity extends AppCompatActivity {
                         dialog.dismiss();
                         Toasty.success(getApplicationContext() , "Users Registers User ID - " + userID  , Toasty.LENGTH_LONG)
                                 .show();
+
+                        Intent i = new Intent(getApplicationContext() , MainActivity.class);
+                        startActivity(i);
+                        finish();
 
                     }
                     else

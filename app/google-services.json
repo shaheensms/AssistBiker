@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "488292210334-pbe7vd7bs1ph58s7na81j13h3689s3ai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metacoders.assistbiker",
+            "certificate_hash": "24c5faab57c66b713b66a5921742fbacb7d2ae47"
+          }
+        },
+        {
+          "client_id": "488292210334-ub5ke4aojgrns6aqba0jgbdvbfovr2d9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.metacoders.assistbiker",
+            "certificate_hash": "587655414efbf2ed434e06269c01988f9d529100"
+          }
+        },
+        {
           "client_id": "488292210334-euqdgherrakbllp8ptv3g2515fnecog6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

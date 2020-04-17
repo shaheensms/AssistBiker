@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="192dp"
-    android:layout_height="wrap_content"
+    android:layout_height="215dp"
     app:cardCornerRadius="8dp"
     android:layout_margin="4dp"
     app:cardElevation="4dp">
@@ -100,9 +100,11 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/baal_pafji"
                     android:textColor="@color/colorTextHeading"
-                    android:textFontWeight="200"
-                    android:maxLines="2"
+                    android:textFontWeight="150"
+                    android:maxLines="1"
+                    android:lineSpacingExtra="-7dp"
                     android:text="John Doe" />
 
             </LinearLayout>
@@ -116,6 +118,8 @@
                 android:layout_marginTop="4dp"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                android:lineSpacingExtra="-7dp"
+                android:fontFamily="@font/regular_bala_paji"
                 android:textColor="@color/colorGreen"
                 android:maxLines="1"
                 android:text="$120" />

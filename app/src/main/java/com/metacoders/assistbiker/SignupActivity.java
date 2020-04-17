@@ -50,7 +50,7 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
         setContentView(R.layout.activity_signup);
         validator = new Validator(this);
         validator.setValidationListener(SignupActivity.this);
-
+        getSupportActionBar().hide();
         mailIn = findViewById(R.id.mail) ;
         passIn = findViewById(R.id.pass) ;
         nameIn = findViewById(R.id.name) ;

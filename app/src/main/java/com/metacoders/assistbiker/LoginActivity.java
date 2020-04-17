@@ -107,10 +107,10 @@ public class LoginActivity extends AppCompatActivity {
                         if(responsee.getMsg().equals("true"))
                         {
                             // user is authnticated
-
-                        Toasty.success(getApplicationContext() , "User ID : " + responsee.getCustomer_id() +
-                               " Name :   " +  responsee.getCustomer_name() , Toasty.LENGTH_LONG  , false)
-                                .show();
+//
+//                        Toasty.success(getApplicationContext() , "User ID : " + responsee.getCustomer_id() +
+//                               " Name :   " +  responsee.getCustomer_name() , Toasty.LENGTH_LONG  , false)
+//                                .show();
 
 
                         SaveTheUser() ;
@@ -162,6 +162,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // here saving the user in shared prefs
 
+
+        Intent o = new Intent(getApplicationContext() , MainActivity.class) ;
+        startActivity(o);
+        finish();
 
 
 
