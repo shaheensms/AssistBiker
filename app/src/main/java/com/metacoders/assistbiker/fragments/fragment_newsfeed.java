@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.NewsFeedAdapter;
+import com.metacoders.assistbiker.adapter.NewsTrendAdapter;
 import com.metacoders.assistbiker.models.NewsFeedModel;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 
@@ -26,7 +27,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class fragment_newsfeed extends Fragment {
     View view;
-    private RecyclerView mRecyclerView;
+    private RecyclerView newsRecyclerView, trendRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView.Adapter adapter;
     private List<NewsFeedModel> newsfeedList = new ArrayList<>();
@@ -37,8 +38,10 @@ public class fragment_newsfeed extends Fragment {
         // Inflate the layout for this fragment
         loadNews();
 
-        mRecyclerView = view.findViewById(R.id.news_feed_recyclerview);
-        mRecyclerView.setHasFixedSize(true);
+        newsRecyclerView = view.findViewById(R.id.news_feed_recyclerview);
+        trendRecyclerView = view.findViewById(R.id.trending_news_feed_recyclerview);
+        newsRecyclerView.setHasFixedSize(true);
+        trendRecyclerView.setHasFixedSize(true);
 
 
         return view;
@@ -58,8 +61,14 @@ public class fragment_newsfeed extends Fragment {
                         newsfeedList = response.body();
                         adapter = new NewsFeedAdapter(getActivity(), newsfeedList);
                         linearLayoutManager = new LinearLayoutManager(getContext());
-                        mRecyclerView.setLayoutManager(linearLayoutManager);
-                        mRecyclerView.setAdapter(adapter);
+                        newsRecyclerView.setLayoutManager(linearLayoutManager);
+                        newsRecyclerView.setAdapter(adapter);
+
+                        adapter = new NewsTrendAdapter(getActivity(), newsfeedList);
+                        linearLayoutManager = new LinearLayoutManager(getContext(), linearLayoutManager.HORIZONTAL, false );
+                        trendRecyclerView.setLayoutManager(linearLayoutManager);
+                        trendRecyclerView.setAdapter(adapter);
+
 
                         Log.d(TAG, "onResponse: feeds are" + newsfeedList.toString());
                     }
