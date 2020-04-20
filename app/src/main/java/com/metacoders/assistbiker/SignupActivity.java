@@ -2,6 +2,8 @@ package com.metacoders.assistbiker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.metacoders.assistbiker.api.api;
+import com.metacoders.assistbiker.models.ResponseModel;
+import com.metacoders.assistbiker.models.Sent_Response_mobile;
+import com.metacoders.assistbiker.requests.ServiceGenerator;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.DecimalMax;
@@ -22,6 +28,11 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -75,16 +86,89 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
     public void onValidationSucceeded() {
 
 //        Toast.makeText(getApplicationContext() , mobileIn.getText(), Toast.LENGTH_SHORT)
-//                .show();
+//              .show();
 
 
 
-        Intent i = new Intent( getApplicationContext() ,  OTPActivity.class) ;
-        i.putExtra("NAME",nameIn.getText().toString() ) ;
-        i.putExtra("PASS",passIn.getText().toString() ) ;
-        i.putExtra("MAIL",mailIn.getText().toString() ) ;
-        i.putExtra("NUM",mobileIn.getText().toString()  ) ;
-        startActivity(i);
+      checkPhoneNumber() ;
+
+
+    }
+
+    private void checkPhoneNumber() {
+
+        final ProgressDialog dialog = new ProgressDialog(SignupActivity.this);
+        dialog.setMessage("Checking Phone Number !!!");
+        dialog.show();
+        dialog.setCancelable(false);
+
+        api  api = ServiceGenerator.AllApi() ;
+
+
+
+
+
+        Sent_Response_mobile model = new Sent_Response_mobile( "+88" +mobileIn.getText().toString()) ;
+
+
+        Call<ResponseModel> chekNumber =  api.checkNumberValid(model) ;
+
+        chekNumber.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+
+
+                dialog.dismiss();
+
+                if(response.code() == 200)
+                {
+                    ResponseModel model = response.body() ;
+
+                    if(model.getMsg().equals("user_exists"))
+                    {
+                        Toasty.error(getApplicationContext() , "Error : Phone Number  All Ready Exists  !!!", Toasty.LENGTH_LONG)
+                                .show();
+
+                    }
+                    else if (model.getMsg().equals("false"))
+                    {
+                        Intent i = new Intent( getApplicationContext() ,  OTPActivity.class) ;
+                        i.putExtra("NAME",nameIn.getText().toString() ) ;
+                        i.putExtra("PASS",passIn.getText().toString() ) ;
+                        i.putExtra("MAIL",mailIn.getText().toString() ) ;
+                        i.putExtra("NUM",mobileIn.getText().toString()  ) ;
+                        startActivity(i);
+
+                    }
+                    else
+                    {
+                        Toasty.error(getApplicationContext() , "Error :  Something Went Wrong Try Again !!!", Toasty.LENGTH_LONG)
+                                .show();
+
+                    }
+
+                }
+                else
+                {
+                    Toasty.error(getApplicationContext() , "Error : " + response.code() , Toasty.LENGTH_LONG)
+                            .show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+
+                dialog.dismiss();
+                Toasty.error(getApplicationContext() , "Error : " + t.getMessage() , Toasty.LENGTH_LONG)
+                        .show();
+            }
+        });
+
+
+
+
+
 
     }
 
