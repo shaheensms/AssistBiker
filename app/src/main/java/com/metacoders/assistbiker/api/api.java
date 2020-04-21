@@ -1,6 +1,7 @@
 package com.metacoders.assistbiker.api;
 
 import com.metacoders.assistbiker.models.NewsFeedModel;
+import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.ResponseModel;
 import com.metacoders.assistbiker.models.Response_login;
 import com.metacoders.assistbiker.models.Response_register;
@@ -28,7 +29,8 @@ public interface api {
     Call<List<NewsFeedModel>> getNewsFeed ();
     @POST("customers/check_number")
     Call<ResponseModel> checkNumberValid(@Body Sent_Response_mobile body );
-
+    @GET("products")
+    Call<List<ProductsModel>> getProducts ();
 
 
 }
