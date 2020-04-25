@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.metacoders.assistbiker.fragments.fragment_cart;
 import com.metacoders.assistbiker.fragments.fragment_newsfeed;
 import com.metacoders.assistbiker.fragments.fragment_products;
 
@@ -25,6 +26,8 @@ public class viewPager2_adapter extends FragmentStateAdapter {
             case 1:
                 return new fragment_products();
 
+            case 2 :
+                return  new fragment_cart() ;
         }
 
         return new fragment_newsfeed();
