@@ -48,18 +48,19 @@
                     android:textColor="@color/colorTextHeading"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:text="Dummy product name" />
+
                 <TextView
+                    android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorCardBackground"
-                    android:maxLines="2"
-                    android:textSize="20sp"
-                    android:id="@+id/price"
+                    android:elevation="4dp"
                     android:fontFamily="@font/nunito_regular"
+                    android:maxLines="2"
+                    android:text="BDT: 450 Taka"
                     android:textAlignment="center"
                     android:textColor="@color/colorGreen"
-                    android:elevation="4dp"
-                    android:text="BDT: 450 Taka" />
+                    android:textSize="19sp" />
             </LinearLayout>
 
             <LinearLayout
