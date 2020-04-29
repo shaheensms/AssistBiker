@@ -3,6 +3,7 @@ package com.metacoders.assistbiker.fragments;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.metacoders.assistbiker.ProductDetailActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
 import com.metacoders.assistbiker.models.ProductsModel;
@@ -23,8 +25,10 @@ import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.DefaultSort;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,12 +41,17 @@ public class fragment_products extends Fragment {
     View view;
     private RecyclerView productRecyclerView;
     private GridLayoutManager gridLayoutManager;
-    private RecyclerView.Adapter adapter;
+    private ProductsAdapter adapter;
+    ProductsAdapter.ItemClickListenter itemClickListenter ;
     private List<ProductsModel> productsList = new ArrayList<>();
     GridLayoutManager linearLayoutManagefr ;
+    Context context ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_products, container, false);
+        context = view.getContext() ;
+
         // Inflate the layout for this fragment
         loadProducts();
 
@@ -56,6 +65,24 @@ public class fragment_products extends Fragment {
                 initSpruce();
             }
         };
+
+
+         itemClickListenter = new ProductsAdapter.ItemClickListenter() {
+             @Override
+             public void onItemClick(View view,final int pos) {
+
+                 Intent i = new Intent(context , ProductDetailActivity.class);
+                 ProductsModel singleProduct = new ProductsModel() ;
+                 singleProduct = productsList.get(pos) ;
+                i.putExtra("PRODUCT",  singleProduct) ;
+               //  Toasty.warning(context , singleProduct.getProduct_title() , Toasty.LENGTH_SHORT).show();
+                 startActivity(i);
+
+
+
+             }
+         } ;
+
 
         return view;
     }
@@ -78,7 +105,7 @@ public class fragment_products extends Fragment {
             public void onResponse(Call<List<ProductsModel>> call, Response<List<ProductsModel>> response) {
                 if (response.isSuccessful()) {
                     productsList = response.body();
-                    adapter = new ProductsAdapter(getActivity(), productsList);
+                    adapter = new ProductsAdapter(getActivity(), productsList , itemClickListenter);
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);
                     productRecyclerView.setLayoutManager(linearLayoutManagefr);
                     productRecyclerView.setAdapter(adapter);
@@ -97,6 +124,7 @@ public class fragment_products extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         if (spruceAnimator != null) {
             spruceAnimator.start();
         }

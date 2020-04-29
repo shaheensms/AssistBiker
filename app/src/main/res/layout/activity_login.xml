@@ -149,6 +149,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
             android:textColor="@color/black"
             android:layout_marginLeft="2dp"
             android:fontFamily="@font/baal_pafji"
+
             android:id="@+id/registerBtn"
             android:text="Register Now" />
     </LinearLayout>

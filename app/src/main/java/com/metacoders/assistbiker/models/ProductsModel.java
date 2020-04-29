@@ -3,7 +3,9 @@ package com.metacoders.assistbiker.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProductsModel {
+import java.io.Serializable;
+
+public class ProductsModel  implements Serializable {
 
     @Expose
     @SerializedName("product_id")

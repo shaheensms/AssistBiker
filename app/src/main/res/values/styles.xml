@@ -16,10 +16,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppAppCompThemeNoAction" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="BottomNavigationViewStyle">
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">13sp</item>
     </style>
+
+
 
 
 

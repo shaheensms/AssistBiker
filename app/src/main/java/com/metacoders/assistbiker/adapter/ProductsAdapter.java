@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,10 +22,12 @@ import java.util.List;
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
     private Context ctx;
     private List<ProductsModel> productList;
+    private ItemClickListenter itemClickListenter ;
 
-    public ProductsAdapter(Context ctx, List<ProductsModel> productList) {
+    public ProductsAdapter(Context ctx, List<ProductsModel> productList , ItemClickListenter itemClickListenter ) {
         this.ctx = ctx;
         this.productList = productList;
+        this.itemClickListenter = itemClickListenter ;
     }
 
     @NonNull
@@ -32,7 +36,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_product, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view , itemClickListenter);
     }
 
     @Override
@@ -60,26 +64,41 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ImageView pImage;
-        public TextView pTitle;
-        public TextView pPrice;
-        public TextView pCategory;
+         ImageView pImage;
+         TextView pTitle;
+         TextView pPrice;
+         TextView pCategory;
+         CardView cardView ;
 
-        public ViewHolder(@NonNull View itemView) {
+
+         ItemClickListenter itemClickListenter ;
+
+
+        private ViewHolder(@NonNull View itemView , ItemClickListenter  itemClickListenter  ) {
             super(itemView);
 
-            itemView.setOnClickListener(this);
 
             pImage = itemView.findViewById(R.id.product_imageview);
             pTitle = itemView.findViewById(R.id.product_title_tv);
+            cardView= itemView.findViewById(R.id.cardView) ;
             pPrice = itemView.findViewById(R.id.product_price_tv);
             pCategory = itemView.findViewById(R.id.product_category_tv);
-
+            this.itemClickListenter = itemClickListenter;
+            cardView.setOnClickListener(this);
+            this.itemClickListenter = itemClickListenter;
         }
 
         @Override
         public void onClick(View v) {
 
+            itemClickListenter.onItemClick( v   ,  getAdapterPosition());
         }
     }
+
+    public  interface  ItemClickListenter{
+
+        void onItemClick(View view , int pos ) ;
+
+    }
+
 }

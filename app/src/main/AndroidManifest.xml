@@ -11,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProductDetailActivity"></activity>
-        <activity android:name=".OTPActivity"></activity>
+        <activity
+            android:name=".ProductDetailActivity"
+            android:theme="@style/AppThemeNoAction" />
+        <activity android:name=".OTPActivity" />
         <activity android:name=".SignupActivity" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppThemeNoAction"></activity>
+            android:theme="@style/AppThemeNoAction" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppThemeNoAction">
