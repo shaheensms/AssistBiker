@@ -1,10 +1,9 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.viewPager2_adapter;
 
 public class MainActivity extends AppCompatActivity {

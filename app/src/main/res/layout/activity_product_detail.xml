@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorAppBackground"
-    tools:context=".ProductDetailActivity">
+    tools:context=".Activities.ProductDetailActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_220sdp"
+                android:layout_height="@dimen/_210sdp"
                 app:sliderAnimationDuration="800"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderStartAutoCycle="true"

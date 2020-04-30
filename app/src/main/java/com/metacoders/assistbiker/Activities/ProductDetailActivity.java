@@ -1,20 +1,24 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.google.android.material.button.MaterialButton;
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.SliderAdapterExample;
+import com.metacoders.assistbiker.database.CartDatabase;
+import com.metacoders.assistbiker.models.CartDbModel;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.sliderItem;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -23,7 +27,8 @@ import com.smarteist.autoimageslider.SliderView;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -38,17 +43,17 @@ public class ProductDetailActivity extends AppCompatActivity {
     SliderView sliderView ;
     SliderAdapterExample adapter ;
     ArrayList<sliderItem> sliderItems  ;
+    CartDatabase database ;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
       //  getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_product_detail);
-
+        database = Room.databaseBuilder(getApplicationContext(), CartDatabase.class, CartDatabase.DB_NAME).build();
         sliderItems = new ArrayList<>();
         // init view
         title = findViewById(R.id.title) ;
@@ -96,9 +101,62 @@ public class ProductDetailActivity extends AppCompatActivity {
             loadTheViews(singleProduct) ;
         }
 
+        gotocart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent o = new Intent(getApplicationContext() , CartActivity.class);
+                startActivity(o);
+
+            }
+        });
+
+        adtocart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(singleProduct != null)
+                {  // insert the item
+                    CartDbModel cartDbModel = new CartDbModel() ;
+                    cartDbModel.title = singleProduct.getProduct_title();
+                    cartDbModel.price = singleProduct.getProduct_price() ;
+                    cartDbModel.quantity = 1 ;
+                    cartDbModel.product_id = singleProduct.getProduct_id() ;
+
+
+                    insertTheProduct(cartDbModel) ;
+
+
+                }
 
 
 
+            }
+        });
+
+
+
+
+
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void insertTheProduct(CartDbModel cartDbModel) {
+
+        new AsyncTask<CartDbModel, Void, Long>() {
+            @Override
+            protected Long doInBackground(CartDbModel... params) {
+                return database.dao().insertCartItem(params[0]);
+
+            }
+
+            @Override
+            protected void onPostExecute(Long id) {
+                super.onPostExecute(id);
+
+                Toasty.success(ProductDetailActivity.this , "Added To Your Cart !!" , Toasty.LENGTH_SHORT).show();
+            }
+        }.execute(cartDbModel);
 
 
     }

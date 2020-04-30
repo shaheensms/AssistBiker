@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.metacoders.assistbiker.ProductDetailActivity;
+import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
 import com.metacoders.assistbiker.models.ProductsModel;
@@ -25,10 +24,8 @@ import com.willowtreeapps.spruce.animation.DefaultAnimations;
 import com.willowtreeapps.spruce.sort.DefaultSort;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

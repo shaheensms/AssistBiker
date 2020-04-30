@@ -1,29 +1,24 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.api.api;
 import com.metacoders.assistbiker.models.ResponseModel;
 import com.metacoders.assistbiker.models.Sent_Response_mobile;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.DecimalMax;
-import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Length;
-import com.mobsandgeeks.saripaar.annotation.Max;
-import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 

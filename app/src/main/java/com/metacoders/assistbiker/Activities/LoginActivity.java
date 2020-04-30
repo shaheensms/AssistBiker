@@ -1,4 +1,4 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Utilities;
 import com.metacoders.assistbiker.api.api;
 import com.metacoders.assistbiker.models.Response_login;
