@@ -8,6 +8,7 @@ import androidx.room.Room;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.metacoders.assistbiker.R;
@@ -18,11 +19,17 @@ import com.metacoders.assistbiker.models.CartDbModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class CartActivity extends AppCompatActivity {
 
     CartDatabase myDatabase ;
     RecyclerView cartRecylerview ;
     CartRecylerViewAdapter cartAdapter  ;
+    CartRecylerViewAdapter.ViewHolder viewHolder  ;
+   public TextView TotalTextView;
+    double toatalAmount = 0.0 ;
+
     ArrayList<CartDbModel> cartList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,8 @@ public class CartActivity extends AppCompatActivity {
                 .build();
 
         cartRecylerview = findViewById(R.id.cartList ) ;
+        TotalTextView = findViewById(R.id.totalView) ;
+
         cartRecylerview.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -56,12 +65,30 @@ public class CartActivity extends AppCompatActivity {
             protected void onPostExecute(List<CartDbModel> todoList) {
 
 
-                cartAdapter = new CartRecylerViewAdapter(getApplicationContext() , todoList);
+                cartAdapter = new CartRecylerViewAdapter(CartActivity.this , todoList);
                 cartRecylerview.setAdapter(cartAdapter);
+
+
+                TotalTextView.setText(calculateTotal(todoList) + " BDT");
+
                // cartAdapter.updateTodoList(todoList);
 
             }
         }.execute();
     }
+
+
+    private  double  calculateTotal(List<CartDbModel> todoList)
+    {
+        for(CartDbModel item : todoList)
+        {
+            toatalAmount  = toatalAmount + (item.price * item.quantity) ;
+        }
+
+
+        return  toatalAmount ;
+
+    }
+
 
 }
