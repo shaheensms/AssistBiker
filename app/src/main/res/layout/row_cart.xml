@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_92sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/_128sdp"
+            android:layout_height="match_parent"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dummy name"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:textColor="@color/colorTextHeading" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$ 1200"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/colorGreen" />
+
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:layout_width="@dimen/_92sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginStart="2dp"
+                app:backGroundColor="@color/red"
+                app:finalNumber="20"
+                app:initialNumber="1" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
