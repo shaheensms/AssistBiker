@@ -46,6 +46,8 @@ public class fragment_newsfeed extends Fragment {
         trendRecyclerView.setHasFixedSize(true);
 
 
+
+
         trendRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
