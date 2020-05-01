@@ -23,6 +23,8 @@ public class CartDbModel implements Serializable {
 
     public Integer product_id;
 
+    public String product_image ;
+
     @Ignore
     public String priority;
 

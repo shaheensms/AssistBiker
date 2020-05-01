@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -36,7 +37,7 @@ import es.dmoral.toasty.Toasty;
 public class ProductDetailActivity extends AppCompatActivity {
 
     private  static  String TAG = "ProductDetailActivity" ;
-
+    Boolean trr = false , isSaved  ;
     ProductsModel singleProduct ;
     HtmlTextView descriptionView ;
     MaterialButton gotocart , adtocart ;
@@ -52,8 +53,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+//       getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_product_detail);
         database = Room.databaseBuilder(getApplicationContext(), CartDatabase.class, CartDatabase.DB_NAME).build();
         sliderItems = new ArrayList<>();
@@ -75,12 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         singleProduct = (ProductsModel) i.getSerializableExtra("PRODUCT") ;
       //  Log.d(TAG , singleProduct.getDate()+ " " + singleProduct.getProduct_title() ) ;
 
-
-
-
-
-        if(singleProduct == null)
-        {
+        if(singleProduct == null) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProductDetailActivity.this) ;
             alertDialog.setTitle("ERROR!!");
@@ -99,8 +95,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         }
-        else
-        {
+        else {
             loadTheViews(singleProduct) ;
         }
 
@@ -120,21 +115,25 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 if(singleProduct != null)
                 {  // insert the item
-                    CartDbModel cartDbModel = new CartDbModel() ;
-                    cartDbModel.title = singleProduct.getProduct_title();
-                    cartDbModel.price = singleProduct.getProduct_price() ;
-                    cartDbModel.quantity = 1 ;
-                    cartDbModel.product_id = singleProduct.getProduct_id() ;
 
 
-                    insertTheProduct(cartDbModel) ;
+                        CartDbModel cartDbModel = new CartDbModel() ;
+                        cartDbModel.title = singleProduct.getProduct_title();
+                        cartDbModel.price = singleProduct.getProduct_price() ;
+                        cartDbModel.quantity = 1 ;
+                        cartDbModel.product_image = singleProduct.getProduct_img1() ;
+                        cartDbModel.product_id = singleProduct.getProduct_id() ;
+
+                           isItemAlreadyExist(cartDbModel);
+
+                          //  Toast.makeText(getApplicationContext() , ""  + singleProduct.getProduct_id() , Toast.LENGTH_LONG).show();
+                       // insertTheProduct(cartDbModel) ;
+
+                    }
 
 
                 }
 
-
-
-            }
         });
 
 
@@ -198,6 +197,41 @@ public class ProductDetailActivity extends AppCompatActivity {
         descriptionView.setHtml(description);
         progressBar.setVisibility(View.GONE);
         descriptionView.setVisibility(View.VISIBLE);
+
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    private void  isItemAlreadyExist(CartDbModel cartDbModel) {
+
+
+        new AsyncTask<Integer, Void, CartDbModel>() {
+            @Override
+            protected CartDbModel doInBackground(Integer... params) {
+
+                return database.dao().fetchCartByID(params[0]);
+
+            }
+
+            @Override
+            protected void onPostExecute(CartDbModel cartItem) {
+                super.onPostExecute(cartItem);
+
+                if(cartItem != null)
+                {
+                    Toasty.error(ProductDetailActivity.this , "You Already Added The Product !!"  +  cartItem.title, Toasty.LENGTH_LONG).show();
+
+                }
+                else
+                {
+                   insertTheProduct(cartDbModel);
+
+                }
+
+            }
+        }.execute(cartDbModel.product_id);
+
+
 
     }
 }

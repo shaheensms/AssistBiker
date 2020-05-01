@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.metacoders.assistbiker.Activities.CartActivity;
 import com.metacoders.assistbiker.R;
@@ -33,7 +36,6 @@ import es.dmoral.toasty.Toasty;
 public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerViewAdapter.ViewHolder> {
 
     private List<CartDbModel> cartList = new ArrayList<>() ;
-    Context context ;
     private  CartActivity cartActivity ;
 
 
@@ -52,7 +54,7 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_cart, parent, false);
         CartRecylerViewAdapter.ViewHolder viewHolder = new CartRecylerViewAdapter.ViewHolder(view);
         return viewHolder;
     }
@@ -63,8 +65,15 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
         final CartDatabase database = Room.databaseBuilder(cartActivity, CartDatabase.class, CartDatabase.DB_NAME).build();
         final CartDbModel cartItem = cartList.get(position);
         holder.txtName.setText(cartItem.title);
-        holder.textPrice.setText(cartItem.price * cartItem.quantity  + "");
+        holder.textPrice.setText(cartItem.price+ "");
         holder.numberButton.setNumber(cartItem.quantity+ "");
+        Glide.with(cartActivity)
+                .load(cartList
+                .get(position))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(holder.productImage) ;
 
 
         holder.delteBtn.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +93,7 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
                     protected void onPostExecute(Integer number) {
                         super.onPostExecute(number);
 
-                        Toasty.success(context , "Item Removed !!  " + number, Toasty.LENGTH_SHORT).show();
+                        Toasty.success(cartActivity , "Item Removed !!  " + number, Toasty.LENGTH_SHORT).show();
 
                     }
                 }.execute(singleITem);
@@ -138,6 +147,8 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
 
 
 
+
+
     }
 
     @Override
@@ -150,19 +161,22 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
 
         public TextView txtName;
         public TextView textPrice;
-        public LinearLayout cardView;
+        public CardView cardView;
         public ElegantNumberButton numberButton ;
         public  ImageButton delteBtn  ;
+        public  ImageView productImage;
+
 
 
         public ViewHolder(View view) {
             super(view);
 
-            delteBtn = view.findViewById(R.id.cancelBtn_cart) ;
-            txtName = view.findViewById(R.id.itemName_cart);
-            textPrice = view.findViewById(R.id.itemPrice_cart);
-            numberButton = view.findViewById(R.id.Quantity_btn) ;
+            delteBtn = view.findViewById(R.id.cart_delete) ;
+            txtName = view.findViewById(R.id.cart_name);
+            textPrice = view.findViewById(R.id.cart_price);
+            numberButton = view.findViewById(R.id.number_button) ;
             cardView = view.findViewById(R.id.container);
+            productImage = view.findViewById(R.id.image);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -33,6 +33,8 @@ public interface api {
     Call<ResponseModel> checkNumberValid(@Body Sent_Response_mobile body );
     @GET("products")
     Call<List<ProductsModel>> getProducts ();
+    @GET("products/latest")
+    Call<List<ProductsModel>> getLatestProduct();
 
     @GET("products/latest")
     Observable<List<ProductsModel>> getLatestProducts();//   Flowable<List<ProductsModel>> getProductss ();

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,7 @@ public class fragment_newsfeed extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView.Adapter adapter;
     private List<NewsFeedModel> newsfeedList = new ArrayList<>();
-
+    private List<ProductsModel> productsList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_newfeed, container, false);
@@ -88,7 +89,11 @@ public class fragment_newsfeed extends Fragment {
         });
 
 
-        test()  ;
+        //test()  ;
+
+        loadTrend();
+        loadNews();
+
 
         return view;
     }
@@ -201,8 +206,8 @@ public class fragment_newsfeed extends Fragment {
         call.enqueue(new Callback<List<NewsFeedModel>>() {
             @Override
             public void onResponse(Call<List<NewsFeedModel>> call, Response<List<NewsFeedModel>> response) {
-                for (int i = 0; i < response.body().size(); i++) {
-                    if (response.isSuccessful() && response.body() != null) {
+
+                    if (response.code() == 200 && response.body() != null) {
                         newsfeedList = response.body();
                         adapter = new NewsFeedAdapter(getActivity(), newsfeedList);
                         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -218,7 +223,7 @@ public class fragment_newsfeed extends Fragment {
 
                         Log.d(TAG, "onResponse: feeds are" + newsfeedList.toString());
                     }
-                }
+
             }
 
             @Override
@@ -226,6 +231,39 @@ public class fragment_newsfeed extends Fragment {
                 Log.d(TAG, "onResponse: " + t.toString());
             }
         });
+
+
+    }
+    private  void loadTrend()
+    {
+        Call<List<ProductsModel>> call = ServiceGenerator
+            .AllApi()
+            .getLatestProduct();
+
+        call.enqueue(new Callback<List<ProductsModel>>() {
+            @Override
+            public void onResponse(Call<List<ProductsModel>> call, Response<List<ProductsModel>> response) {
+
+                if(response.code() == 200 && response.body() != null)
+                {
+                    productsList = response.body() ;
+
+                    adapter = new NewsTrendAdapter(getActivity(), productsList);
+                    linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    trendRecyclerView.setLayoutManager(linearLayoutManager);
+                    trendRecyclerView.setNestedScrollingEnabled(true);
+                    trendRecyclerView.setAdapter(adapter);
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductsModel>> call, Throwable t) {
+
+            }
+        }) ;
 
 
     }

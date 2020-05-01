@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 import com.metacoders.assistbiker.models.CartDbModel;
 
-@Database(entities = {CartDbModel.class}, version = 1, exportSchema = false)
+@Database(entities = {CartDbModel.class}, version = 2, exportSchema = false)
 public abstract class CartDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "biker_cart_db";
