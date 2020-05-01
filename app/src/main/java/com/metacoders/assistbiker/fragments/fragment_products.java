@@ -100,13 +100,12 @@ public class fragment_products extends Fragment {
         call.enqueue(new Callback<List<ProductsModel>>() {
             @Override
             public void onResponse(Call<List<ProductsModel>> call, Response<List<ProductsModel>> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() & response.body() != null) {
                     productsList = response.body();
                     adapter = new ProductsAdapter(getActivity(), productsList , itemClickListenter);
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);
                     productRecyclerView.setLayoutManager(linearLayoutManagefr);
                     productRecyclerView.setAdapter(adapter);
-
                     Log.d(TAG, "onResponse: Products are" + productsList.toString());
                 }
             }

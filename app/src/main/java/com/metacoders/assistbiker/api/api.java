@@ -12,6 +12,8 @@ import com.metacoders.assistbiker.models.testModel;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -32,5 +34,9 @@ public interface api {
     @GET("products")
     Call<List<ProductsModel>> getProducts ();
 
+    @GET("products/latest")
+    Observable<List<ProductsModel>> getLatestProducts();//   Flowable<List<ProductsModel>> getProductss ();
+    @GET("customers/newsfeed")
+    Observable<List<NewsFeedModel>> getNewsFeeds ();
 
 }

@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.metacoders.assistbiker.R;
-import com.metacoders.assistbiker.models.NewsFeedModel;
+import com.metacoders.assistbiker.models.ProductsModel;
 
 import java.util.List;
 
 public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.ViewHolder> {
     private Context ctx;
-    private List<NewsFeedModel> newsfeedList;
+    private List<ProductsModel> newsfeedList;
 
-    public NewsTrendAdapter(Context ctx, List<NewsFeedModel> newsfeedList) {
+    public NewsTrendAdapter(Context ctx, List<ProductsModel> newsfeedList) {
         this.ctx = ctx;
         this.newsfeedList = newsfeedList;
     }
@@ -36,14 +36,14 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
     @Override
     public void onBindViewHolder(@NonNull NewsTrendAdapter.ViewHolder holder, int position) {
 
-        NewsFeedModel newsFeed = newsfeedList.get(position);
+        ProductsModel newsFeed = newsfeedList.get(position);
 
-        holder.title.setText(newsFeed.getTitle());
+        holder.title.setText(newsFeed.getProduct_title());
         holder.price.setText("$" + newsFeed.getProduct_price().toString());
 //        holder.description.setText(newsFeed.getDescription());
 
         Glide.with(ctx)
-                .load(newsFeed.getImage())
+                .load(newsFeed.getProduct_img1())
                 .centerCrop()
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
