@@ -32,7 +32,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dummy name jjjjjjjjjjjjjjjjjjjjjjjjjjjj"
+                    android:text="Dummy name "
                     android:id="@+id/cart_name"
                     android:textStyle="bold"
                     android:minLines="2"
