@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.models.ProductsModel;
 
 import java.util.List;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
     private Context ctx;
@@ -49,11 +53,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         holder.pPrice.setText("৳ " + product.getProduct_price().toString());
         holder.pCategory.setText(product.getProduct_keywords());
 
+
+
         Glide.with(ctx)
                 .load(Constants.IMAGE_URL + product.getProduct_img1())
-                .centerCrop()
+                .thumbnail(0.25f)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.placeholder)
+                .thumbnail(/*sizeMultiplier=*/ 0.25f)
+                .error(R.drawable.placeholder)
                 .into(holder.pImage);
 
     }

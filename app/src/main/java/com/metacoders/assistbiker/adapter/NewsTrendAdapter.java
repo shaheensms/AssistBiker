@@ -46,6 +46,7 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
         Glide.with(ctx)
                 .load(Constants.IMAGE_URL + newsFeed.getProduct_img1())
                 .centerCrop()
+                .thumbnail(0.25f)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
 

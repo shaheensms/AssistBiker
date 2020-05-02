@@ -95,9 +95,8 @@ public class fragment_products extends Fragment {
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);
                     productRecyclerView.setLayoutManager(gridLayoutManager);
                     productRecyclerView.setAdapter(adapter);
+
                     productRecyclerView.setLayoutManager(gridLayoutManager);
-
-
 
                     productRecyclerView.getViewTreeObserver().addOnPreDrawListener(
 
@@ -129,11 +128,16 @@ public class fragment_products extends Fragment {
 
 //                    Log.d(TAG, "onResponse: Products are" + productsList.toString());
                 }
+
+                else
+                {
+                    Log.d(TAG, "onResponse: ERROR ");
+                }
             }
 
             @Override
             public void onFailure(Call<List<ProductsModel>> call, Throwable t) {
-//                Log.d(TAG, "onResponse: " + t.toString());
+               Log.d(TAG, "onResponse: " + t.toString());
 
 
             }
@@ -144,9 +148,7 @@ public class fragment_products extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (spruceAnimator != null) {
-            spruceAnimator.start();
-        }
+
 
     }
 }

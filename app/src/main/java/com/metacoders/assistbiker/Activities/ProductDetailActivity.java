@@ -54,8 +54,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//       getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//        getWindow().setStatusBarColor(Color.TRANSPARENT);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_product_detail);
         database = Room.databaseBuilder(getApplicationContext(), CartDatabase.class, CartDatabase.DB_NAME).build();
         sliderItems = new ArrayList<>();

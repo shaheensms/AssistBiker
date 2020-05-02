@@ -1,6 +1,7 @@
 package com.metacoders.assistbiker.adapter;
 
 import android.content.Context;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.NewsFeedModel;
 
 import java.util.List;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHolder> {
     private Context ctx;
@@ -48,6 +52,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
                 .load(newsFeed.getImage())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .thumbnail(/*sizeMultiplier=*/ 0.25f)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
 
