@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.metacoders.assistbiker.Activities.CartActivity;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.Utils.Utilities;
 import com.metacoders.assistbiker.database.CartDatabase;
 import com.metacoders.assistbiker.models.CartDbModel;
@@ -68,8 +69,7 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
         holder.textPrice.setText("৳ "+ cartItem.price);
         holder.numberButton.setNumber(cartItem.quantity+ "");
         Glide.with(cartActivity)
-                .load(cartList
-                .get(position))
+                .load(Constants.IMAGE_URL +cartList.get(position).product_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)

@@ -122,7 +122,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         cartDbModel.title = singleProduct.getProduct_title();
                         cartDbModel.price = singleProduct.getProduct_price() ;
                         cartDbModel.quantity = 1 ;
-                        cartDbModel.product_image = singleProduct.getProduct_img1() ;
+                        cartDbModel.product_image =  singleProduct.getProduct_img1() ;
                         cartDbModel.product_id = singleProduct.getProduct_id() ;
 
                            isItemAlreadyExist(cartDbModel);
