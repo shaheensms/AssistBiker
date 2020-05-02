@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.models.ProductsModel;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
 //        holder.description.setText(newsFeed.getDescription());
 
         Glide.with(ctx)
-                .load(newsFeed.getProduct_img1())
+                .load(Constants.IMAGE_URL + newsFeed.getProduct_img1())
                 .centerCrop()
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
