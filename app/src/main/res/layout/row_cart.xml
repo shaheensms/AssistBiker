@@ -21,15 +21,30 @@
             android:layout_marginLeft="@dimen/_12sdp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dummy name"
-                android:id="@+id/cart_name"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_marginBottom="@dimen/_4sdp"
-                android:textColor="@color/colorTextHeading" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dummy name"
+                    android:id="@+id/cart_name"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:textColor="@color/colorTextHeading" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:id="@+id/cart_delete"
+                    android:visibility="visible"
+                    android:background="@drawable/ic_clear_red_24dp"
+                    android:backgroundTint="@color/red"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -49,13 +64,7 @@
                 app:finalNumber="20"
                 android:id="@+id/number_button"
                 app:initialNumber="1" />
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:id="@+id/cart_delete"
-                android:visibility="visible"
-                android:background="@drawable/ic_error_outline_white_24dp"
-                android:backgroundTint="@color/red"
-                android:layout_height="wrap_content"/>
+
 
         </LinearLayout>
 
