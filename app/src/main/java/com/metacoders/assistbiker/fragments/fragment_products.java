@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -55,13 +56,7 @@ public class fragment_products extends Fragment {
         productRecyclerView = view.findViewById(R.id.products_recyclerview);
         productRecyclerView.setHasFixedSize(true);
 
-         linearLayoutManagefr = new GridLayoutManager(getContext(), 2) {
-            @Override
-            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                super.onLayoutChildren(recycler, state);
-                initSpruce();
-            }
-        };
+
 
 
          itemClickListenter = new ProductsAdapter.ItemClickListenter() {
@@ -84,13 +79,7 @@ public class fragment_products extends Fragment {
         return view;
     }
 
-    private void initSpruce() {
-        spruceAnimator = new Spruce.SpruceBuilder(productRecyclerView)
-                .sortWith(new DefaultSort(100))
-                .animateWith(DefaultAnimations.shrinkAnimator(productRecyclerView, 800),
-                        ObjectAnimator.ofFloat(productRecyclerView, "translationX", -productRecyclerView.getWidth(), 0f).setDuration(800))
-                .start();
-    }
+
 
     private void loadProducts() {
         Call<List<ProductsModel>> call = ServiceGenerator
@@ -104,8 +93,40 @@ public class fragment_products extends Fragment {
                     productsList = response.body();
                     adapter = new ProductsAdapter(getActivity(), productsList , itemClickListenter);
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);
-                    productRecyclerView.setLayoutManager(linearLayoutManagefr);
+                    productRecyclerView.setLayoutManager(gridLayoutManager);
                     productRecyclerView.setAdapter(adapter);
+                    productRecyclerView.setLayoutManager(gridLayoutManager);
+
+
+
+                    productRecyclerView.getViewTreeObserver().addOnPreDrawListener(
+
+                            new ViewTreeObserver.OnPreDrawListener() {
+                                @Override
+                                public boolean onPreDraw() {
+
+                                    productRecyclerView.getViewTreeObserver().removeOnPreDrawListener( this);
+                                    for( int i = 0 ; i<productRecyclerView.getChildCount() ; i++)
+                                    {
+                                        View v = productRecyclerView.getChildAt(i) ;
+                                        v.setAlpha(0.0f);
+                                        v.animate()
+                                                .alpha(1.0f)
+                                                .setDuration(300)
+                                                .setStartDelay(i*50)
+                                                .start();
+
+
+                                    }
+
+
+                                    return true;
+                                }
+                            }
+
+                    );
+
+
 //                    Log.d(TAG, "onResponse: Products are" + productsList.toString());
                 }
             }
