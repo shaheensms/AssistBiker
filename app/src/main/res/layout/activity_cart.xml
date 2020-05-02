@@ -7,6 +7,22 @@
     android:orientation="vertical"
     tools:context=".Activities.CartActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:elevation="@dimen/_7sdp"
+        android:layout_height="?actionBarSize">
+        <TextView
+            android:id="@+id/custom_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/baala_paji" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartList"
         android:layout_width="match_parent"

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.models.ProductsModel;
 
 import java.util.List;
@@ -45,11 +46,11 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         ProductsModel product = productList.get(position);
 
         holder.pTitle.setText(product.getProduct_title());
-        holder.pPrice.setText("$" + product.getProduct_price().toString());
+        holder.pPrice.setText("৳ " + product.getProduct_price().toString());
         holder.pCategory.setText(product.getProduct_keywords());
 
         Glide.with(ctx)
-                .load(product.getProduct_img1())
+                .load(Constants.IMAGE_URL + product.getProduct_img1())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.placeholder)

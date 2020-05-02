@@ -65,7 +65,7 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
         final CartDatabase database = Room.databaseBuilder(cartActivity, CartDatabase.class, CartDatabase.DB_NAME).build();
         final CartDbModel cartItem = cartList.get(position);
         holder.txtName.setText(cartItem.title);
-        holder.textPrice.setText(cartItem.price+ "");
+        holder.textPrice.setText("৳ "+ cartItem.price);
         holder.numberButton.setNumber(cartItem.quantity+ "");
         Glide.with(cartActivity)
                 .load(cartList
@@ -93,7 +93,8 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
                     protected void onPostExecute(Integer number) {
                         super.onPostExecute(number);
 
-                        Toasty.success(cartActivity , "Item Removed !!  " + number, Toasty.LENGTH_SHORT).show();
+                        cartActivity.TotalTextView.setText(utilities.calculateTotal(cartList)+ " BDT");
+                        Toasty.success(cartActivity , "Item Removed !!  ", Toasty.LENGTH_SHORT).show();
 
                     }
                 }.execute(singleITem);
@@ -117,7 +118,7 @@ public class CartRecylerViewAdapter extends RecyclerView.Adapter <CartRecylerVie
                 UpdateItem.quantity = newValue ;
 
                // UpdateItem.title = cartList.get(position).title ;
-                holder.textPrice.setText(cartList.get(position).price * newValue + ""); // setting the item price in the row
+             //   holder.textPrice.setText(cartList.get(position).price * newValue + ""); // setting the item price in the row
                 //UpdateItem.product_id = cartList.get(position).product_id ;
                 //UpdateItem.cart_id = cartList.get(position).cart_id ;
 

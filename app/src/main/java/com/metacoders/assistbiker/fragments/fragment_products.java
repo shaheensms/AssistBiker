@@ -106,13 +106,15 @@ public class fragment_products extends Fragment {
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);
                     productRecyclerView.setLayoutManager(linearLayoutManagefr);
                     productRecyclerView.setAdapter(adapter);
-                    Log.d(TAG, "onResponse: Products are" + productsList.toString());
+//                    Log.d(TAG, "onResponse: Products are" + productsList.toString());
                 }
             }
 
             @Override
             public void onFailure(Call<List<ProductsModel>> call, Throwable t) {
-                Log.d(TAG, "onResponse: " + t.toString());
+//                Log.d(TAG, "onResponse: " + t.toString());
+
+
             }
         });
     }
