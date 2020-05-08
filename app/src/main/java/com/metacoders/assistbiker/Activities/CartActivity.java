@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,7 @@ public class CartActivity extends AppCompatActivity {
         myDatabase = Room.databaseBuilder(getApplicationContext(), CartDatabase.class, CartDatabase.DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build();
+
 
         cartRecylerview = findViewById(R.id.cartList ) ;
         TotalTextView = findViewById(R.id.totalView) ;
@@ -87,6 +89,12 @@ public class CartActivity extends AppCompatActivity {
 
 
         return  toatalAmount ;
+
+    }
+
+    public  void setTotalTextView(String price)
+    {   TotalTextView = findViewById(R.id.totalView) ;
+         TotalTextView.setText(price);
 
     }
 
