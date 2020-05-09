@@ -23,14 +23,53 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cartList"
+
+
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cartList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:id="@+id/emptyView"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_empty_cart"
+                android:layout_marginTop="@dimen/_minus30sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="20sp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:text="OOPS!! Your Cart is Empty!!"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
+        android:id="@+id/cartContainer"
         android:layout_height="wrap_content"
         app:cardElevation="4dp">
         <LinearLayout
@@ -61,7 +100,7 @@
                     android:layout_marginTop="@dimen/_4sdp"
                     android:textColor="@color/colorGreen"
                     android:textStyle="bold"
-                    android:text="$ 12500"
+                    android:text="$ 00"
                     android:textSize="20sp" />
             </LinearLayout>
 

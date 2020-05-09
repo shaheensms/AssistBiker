@@ -53,9 +53,7 @@ public class fragment_cart  extends Fragment {
         context = view.getContext() ;
          activity = (Activity) getActivity() ;
 
-                myDatabase = Room.databaseBuilder(context, CartDatabase.class, CartDatabase.DB_NAME)
-                .fallbackToDestructiveMigration()
-                .build();
+
 
         cartRecylerview = view.findViewById(R.id.cartList ) ;
         TotalTextView = view.findViewById(R.id.totalView) ;
@@ -77,6 +75,10 @@ public class fragment_cart  extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     private void loadAllCartItem() {
+
+        myDatabase = Room.databaseBuilder(context, CartDatabase.class, CartDatabase.DB_NAME)
+                .fallbackToDestructiveMigration()
+                .build();
         new AsyncTask<String, Void, List<CartDbModel>>() {
             @Override
             protected List<CartDbModel> doInBackground(String... params) {
@@ -92,17 +94,22 @@ public class fragment_cart  extends Fragment {
                 if(todoList != null && !todoList.isEmpty()) // i know its werid but thats r8 cheaking list is popluted
                 {
                     // list is populated
+                    cartRecylerview.setVisibility(View.VISIBLE);
                     emptyLayout.setVisibility(View.GONE);
                     cartContainer.setVisibility(View.VISIBLE);
                     cartAdapter = new CartRecylerViewAdapter_For_Fragment( todoList , context,fragment_cart.this);
                     cartRecylerview.setAdapter(cartAdapter);
+
+
                     TotalTextView.setText(calculateTotal(todoList) + " BDT");
                     toatalAmount = 0.0  ;
+
                 }
                 else
                 {
-                    // show  empty layout
 
+                    // show  empty layout
+                    cartRecylerview.setVisibility(View.GONE); // because  recycler view not updating .....
                     emptyLayout.setVisibility(View.VISIBLE) ;
                     cartContainer.setVisibility(View.GONE);
 
@@ -136,4 +143,15 @@ public class fragment_cart  extends Fragment {
         loadAllCartItem();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadAllCartItem();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        loadAllCartItem();
+    }
 }

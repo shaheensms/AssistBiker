@@ -1,6 +1,7 @@
 package com.metacoders.assistbiker.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -10,6 +11,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.metacoders.assistbiker.R;
@@ -30,7 +32,8 @@ public class CartActivity extends AppCompatActivity {
     CartRecylerViewAdapter.ViewHolder viewHolder  ;
    public TextView TotalTextView;
     double toatalAmount = 0.0 ;
-
+    CardView cartContainer  ;
+    LinearLayout emptyLayout  ;
     ArrayList<CartDbModel> cartList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,10 @@ public class CartActivity extends AppCompatActivity {
 
         cartRecylerview = findViewById(R.id.cartList ) ;
         TotalTextView = findViewById(R.id.totalView) ;
+        emptyLayout = findViewById(R.id.emptyView) ;
+        cartContainer = findViewById(R.id.cartContainer) ;
+
+        emptyLayout.setVisibility(View.GONE);
 
         cartRecylerview.setLayoutManager(new LinearLayoutManager(this));
 
@@ -67,12 +74,25 @@ public class CartActivity extends AppCompatActivity {
             protected void onPostExecute(List<CartDbModel> todoList) {
 
 
-                cartAdapter = new CartRecylerViewAdapter(CartActivity.this , todoList);
-                cartRecylerview.setAdapter(cartAdapter);
+                if(todoList != null && !todoList.isEmpty()) // i know its werid but thats r8 cheaking list is popluted
+                {
 
 
-                TotalTextView.setText(calculateTotal(todoList) + " BDT");
+                    cartAdapter = new CartRecylerViewAdapter(CartActivity.this, todoList);
+                    cartRecylerview.setAdapter(cartAdapter);
 
+
+                    TotalTextView.setText(calculateTotal(todoList) + " BDT");
+
+                }
+                else
+                {
+                    // show  empty layout
+
+                    emptyLayout.setVisibility(View.VISIBLE) ;
+                    cartContainer.setVisibility(View.GONE);
+
+                }
                // cartAdapter.updateTodoList(todoList);
 
             }
