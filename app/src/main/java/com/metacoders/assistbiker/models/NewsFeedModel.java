@@ -3,7 +3,9 @@ package com.metacoders.assistbiker.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class NewsFeedModel {
+import java.io.Serializable;
+
+public class NewsFeedModel implements Serializable {
 
     @Expose
     @SerializedName("title")

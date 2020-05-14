@@ -1,5 +1,6 @@
 package com.metacoders.assistbiker.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,19 +49,19 @@ public class fragment_newsfeed extends Fragment {
     private RecyclerView.Adapter adapter;
     private List<NewsFeedModel> newsfeedList = new ArrayList<>();
     private List<ProductsModel> productsList = new ArrayList<>();
+    NewsFeedAdapter.ItemClickListenter itemClickListenter;
+    private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_newfeed, container, false);
         // Inflate the layout for this fragment
-       // loadNews();
+        // loadNews();
 
         newsRecyclerView = view.findViewById(R.id.news_feed_recyclerview);
         trendRecyclerView = view.findViewById(R.id.trending_news_feed_recyclerview);
         newsRecyclerView.setHasFixedSize(true);
         trendRecyclerView.setHasFixedSize(true);
-
-
-
 
         trendRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
@@ -88,12 +88,24 @@ public class fragment_newsfeed extends Fragment {
             }
         });
 
-
         //test()  ;
-
         loadTrend();
         loadNews();
 
+//        itemClickListenter = new NewsFeedAdapter.ItemClickListenter() {
+//            @Override
+//            public void onItemClick(View view, int pos) {
+//                NewsFeedModel newsFeed = new NewsFeedModel();
+//                newsFeed = newsfeedList.get(pos);
+//
+////                if (!newsFeed.getIs_product()) {
+//                    Intent intent = new Intent(context, NewsDetailsActivity.class);
+////                    intent.putExtra("News", newsFeed);
+//                    startActivity(intent);
+////                }
+//
+//            }
+//        };
 
         return view;
     }
@@ -106,23 +118,19 @@ public class fragment_newsfeed extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-
-
-        api  api =  retrofit.create(api.class) ;
-
+        api api = retrofit.create(api.class);
 
         Observable<List<NewsFeedModel>> userObservable = api
                 .getNewsFeeds()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
 
-        Observable<List<ProductsModel>> eventsObservable =api
+        Observable<List<ProductsModel>> eventsObservable = api
                 .getLatestProducts()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
 
         Observable<test> combined = Observable.zip(userObservable, eventsObservable, (newsFeedModels, productsModels) -> new test(newsFeedModels, productsModels));
-
 
         combined.subscribe(new Subject<test>() {
             @Override
@@ -157,16 +165,14 @@ public class fragment_newsfeed extends Fragment {
 
             @Override
             public void onNext(test test) {
-                List<NewsFeedModel> newss = new ArrayList<>() ;
-                List<ProductsModel>productsModels = new ArrayList<>() ;
+                List<NewsFeedModel> newss = new ArrayList<>();
+                List<ProductsModel> productsModels = new ArrayList<>();
 
+                newss = test.news;
+                productsModels = test.products;
 
-                newss  =  test.news ;
-                productsModels =  test.products ;
-
-
-               // Log.d("TEST" , productsModels.get(0).getProduct_title() + "" + newss.size()  ) ;
-                adapter = new NewsFeedAdapter(getActivity(), newss);
+                // Log.d("TEST" , productsModels.get(0).getProduct_title() + "" + newss.size()  ) ;
+                adapter = new NewsFeedAdapter(getActivity(), newss, itemClickListenter);
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 newsRecyclerView.setLayoutManager(linearLayoutManager);
                 newsRecyclerView.setAdapter(adapter);
@@ -183,7 +189,7 @@ public class fragment_newsfeed extends Fragment {
             @Override
             public void onError(Throwable e) {
 
-                Toast.makeText(getContext(), e.getMessage() , Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 
             }
 
@@ -192,7 +198,6 @@ public class fragment_newsfeed extends Fragment {
 
             }
         });
-
 
 
     }
@@ -207,12 +212,12 @@ public class fragment_newsfeed extends Fragment {
             @Override
             public void onResponse(Call<List<NewsFeedModel>> call, Response<List<NewsFeedModel>> response) {
 
-                    if (response.code() == 200 && response.body() != null) {
-                        newsfeedList = response.body();
-                        adapter = new NewsFeedAdapter(getActivity(), newsfeedList);
-                        linearLayoutManager = new LinearLayoutManager(getContext());
-                        newsRecyclerView.setLayoutManager(linearLayoutManager);
-                        newsRecyclerView.setAdapter(adapter);
+                if (response.code() == 200 && response.body() != null) {
+                    newsfeedList = response.body();
+                    adapter = new NewsFeedAdapter(getActivity(), newsfeedList, itemClickListenter);
+                    linearLayoutManager = new LinearLayoutManager(getContext());
+                    newsRecyclerView.setLayoutManager(linearLayoutManager);
+                    newsRecyclerView.setAdapter(adapter);
 
 //                        adapter = new NewsTrendAdapter(getActivity(), newsfeedList);
 //                        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -220,10 +225,8 @@ public class fragment_newsfeed extends Fragment {
 //                        trendRecyclerView.setNestedScrollingEnabled(true);
 //                        trendRecyclerView.setAdapter(adapter);
 
-
-                        Log.d(TAG, "onResponse: feeds are" + newsfeedList.toString());
-                    }
-
+                    Log.d(TAG, "onResponse: feeds are" + newsfeedList.toString());
+                }
             }
 
             @Override
@@ -234,19 +237,18 @@ public class fragment_newsfeed extends Fragment {
 
 
     }
-    private  void loadTrend()
-    {
+
+    private void loadTrend() {
         Call<List<ProductsModel>> call = ServiceGenerator
-            .AllApi()
-            .getLatestProduct();
+                .AllApi()
+                .getLatestProduct();
 
         call.enqueue(new Callback<List<ProductsModel>>() {
             @Override
             public void onResponse(Call<List<ProductsModel>> call, Response<List<ProductsModel>> response) {
 
-                if(response.code() == 200 && response.body() != null)
-                {
-                    productsList = response.body() ;
+                if (response.code() == 200 && response.body() != null) {
+                    productsList = response.body();
 
                     adapter = new NewsTrendAdapter(getActivity(), productsList);
                     linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -255,15 +257,13 @@ public class fragment_newsfeed extends Fragment {
                     trendRecyclerView.setAdapter(adapter);
 
                 }
-
-
             }
 
             @Override
             public void onFailure(Call<List<ProductsModel>> call, Throwable t) {
 
             }
-        }) ;
+        });
 
 
     }

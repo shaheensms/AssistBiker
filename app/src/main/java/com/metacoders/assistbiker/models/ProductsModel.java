@@ -169,4 +169,24 @@ public class ProductsModel  implements Serializable {
     public void setProduct_discount(String product_discount) {
         this.product_discount = product_discount;
     }
+
+    @Override
+    public String toString() {
+        return "ProductsModel{" +
+                "product_id=" + product_id +
+                ", p_cat_id=" + p_cat_id +
+                ", manufacturer_id=" + manufacturer_id +
+                ", date='" + date + '\'' +
+                ", product_title='" + product_title + '\'' +
+                ", product_img1='" + product_img1 + '\'' +
+                ", product_img2='" + product_img2 + '\'' +
+                ", product_img3='" + product_img3 + '\'' +
+                ", product_price=" + product_price +
+                ", product_desc='" + product_desc + '\'' +
+                ", product_keywords='" + product_keywords + '\'' +
+                ", status='" + status + '\'' +
+                ", product_discount='" + product_discount + '\'' +
+                '}';
+    }
 }
+

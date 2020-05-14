@@ -1,7 +1,7 @@
 package com.metacoders.assistbiker.adapter;
 
 import android.content.Context;
-import android.transition.Fade;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
+import com.metacoders.assistbiker.Activities.NewsDetailsActivity;
+import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.NewsFeedModel;
 
 import java.util.List;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHolder> {
     private Context ctx;
     private List<NewsFeedModel> newsfeedList;
+    private ItemClickListenter itemClickListenter;
 
-    public NewsFeedAdapter(Context ctx, List<NewsFeedModel> newsfeedList) {
+    public NewsFeedAdapter(Context ctx, List<NewsFeedModel> newsfeedList, ItemClickListenter itemClickListenter) {
         this.ctx = ctx;
         this.newsfeedList = newsfeedList;
+        this.itemClickListenter = itemClickListenter;
     }
 
     @NonNull
@@ -36,7 +37,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_news_feed, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, itemClickListenter);
     }
 
     @Override
@@ -63,6 +64,10 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         return newsfeedList.size();
     }
 
+    public interface ItemClickListenter {
+        void onItemClick(View view, int pos);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
@@ -70,7 +75,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         public TextView description;
         public TextView price;
 
-        public ViewHolder(@NonNull View itemView) {
+        ItemClickListenter itemClickListenter;
+
+        public ViewHolder(@NonNull View itemView, ItemClickListenter itemClickListenter) {
             super(itemView);
 
             itemView.setOnClickListener(this);
@@ -79,12 +86,23 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
             image = itemView.findViewById(R.id.news_imageview);
             description = itemView.findViewById(R.id.news_description_tv);
             price = itemView.findViewById(R.id.news_price_tv);
-
+            this.itemClickListenter = itemClickListenter;
         }
 
         @Override
         public void onClick(View v) {
 
+            int position = getAdapterPosition();
+//            itemClickListenter.onItemClick( v, position);
+
+            if (newsfeedList.get(position).getIs_product()) {
+                Intent intent = new Intent(ctx, ProductDetailActivity.class);
+                intent.putExtra("PRODUCT", newsfeedList.get(position));
+                ctx.startActivity(intent);
+            } else {
+                Intent intent = new Intent(ctx, NewsDetailsActivity.class);
+                ctx.startActivity(intent);
+            }
         }
     }
 }
