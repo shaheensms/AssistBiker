@@ -1,7 +1,6 @@
 package com.metacoders.assistbiker.fragments;
 
 import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +19,6 @@ import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
-import com.willowtreeapps.spruce.Spruce;
-import com.willowtreeapps.spruce.animation.DefaultAnimations;
-import com.willowtreeapps.spruce.sort.DefaultSort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,15 +36,15 @@ public class fragment_products extends Fragment {
     private RecyclerView productRecyclerView;
     private GridLayoutManager gridLayoutManager;
     private ProductsAdapter adapter;
-    ProductsAdapter.ItemClickListenter itemClickListenter ;
+    ProductsAdapter.ItemClickListenter itemClickListenter;
     private List<ProductsModel> productsList = new ArrayList<>();
-    GridLayoutManager linearLayoutManagefr ;
-    Context context ;
+    GridLayoutManager linearLayoutManagefr;
+    Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_products, container, false);
-        context = view.getContext() ;
+        context = view.getContext();
 
         // Inflate the layout for this fragment
         loadProducts();
@@ -56,29 +52,20 @@ public class fragment_products extends Fragment {
         productRecyclerView = view.findViewById(R.id.products_recyclerview);
         productRecyclerView.setHasFixedSize(true);
 
+        itemClickListenter = new ProductsAdapter.ItemClickListenter() {
+            @Override
+            public void onItemClick(View view, final int pos) {
 
-
-
-         itemClickListenter = new ProductsAdapter.ItemClickListenter() {
-             @Override
-             public void onItemClick(View view,final int pos) {
-
-                 Intent i = new Intent(context , ProductDetailActivity.class);
-                 ProductsModel singleProduct = new ProductsModel() ;
-                 singleProduct = productsList.get(pos) ;
-                i.putExtra("PRODUCT",  singleProduct) ;
-               //  Toasty.warning(context , singleProduct.getProduct_title() , Toasty.LENGTH_SHORT).show();
-                 startActivity(i);
-
-
-
-             }
-         } ;
-
-
+                Intent i = new Intent(context, ProductDetailActivity.class);
+                ProductsModel singleProduct = new ProductsModel();
+                singleProduct = productsList.get(pos);
+                i.putExtra("PRODUCT", singleProduct);
+                //  Toasty.warning(context , singleProduct.getProduct_title() , Toasty.LENGTH_SHORT).show();
+                startActivity(i);
+            }
+        };
         return view;
     }
-
 
 
     private void loadProducts() {
@@ -91,7 +78,7 @@ public class fragment_products extends Fragment {
             public void onResponse(Call<List<ProductsModel>> call, Response<List<ProductsModel>> response) {
                 if (response.isSuccessful() & response.body() != null) {
                     productsList = response.body();
-                    adapter = new ProductsAdapter(getActivity(), productsList , itemClickListenter);
+                    adapter = new ProductsAdapter(getActivity(), productsList, itemClickListenter);
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);
                     productRecyclerView.setLayoutManager(gridLayoutManager);
                     productRecyclerView.setAdapter(adapter);
@@ -104,42 +91,30 @@ public class fragment_products extends Fragment {
                                 @Override
                                 public boolean onPreDraw() {
 
-                                    productRecyclerView.getViewTreeObserver().removeOnPreDrawListener( this);
-                                    for( int i = 0 ; i<productRecyclerView.getChildCount() ; i++)
-                                    {
-                                        View v = productRecyclerView.getChildAt(i) ;
+                                    productRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                                    for (int i = 0; i < productRecyclerView.getChildCount(); i++) {
+                                        View v = productRecyclerView.getChildAt(i);
                                         v.setAlpha(0.0f);
                                         v.animate()
                                                 .alpha(1.0f)
                                                 .setDuration(300)
-                                                .setStartDelay(i*50)
+                                                .setStartDelay(i * 50)
                                                 .start();
-
-
                                     }
-
-
                                     return true;
                                 }
                             }
-
                     );
 
-
 //                    Log.d(TAG, "onResponse: Products are" + productsList.toString());
-                }
-
-                else
-                {
+                } else {
                     Log.d(TAG, "onResponse: ERROR ");
                 }
             }
 
             @Override
             public void onFailure(Call<List<ProductsModel>> call, Throwable t) {
-               Log.d(TAG, "onResponse: " + t.toString());
-
-
+                Log.d(TAG, "onResponse: " + t.toString());
             }
         });
     }
@@ -147,8 +122,6 @@ public class fragment_products extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
 
     }
 }

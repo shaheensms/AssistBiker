@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,15 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.models.ProductsModel;
 
 import java.util.List;
-
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
     private Context ctx;
@@ -98,15 +93,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-
             itemClickListenter.onItemClick( v   ,  getAdapterPosition());
         }
     }
 
     public  interface  ItemClickListenter{
-
         void onItemClick(View view , int pos ) ;
-
     }
 
 }
