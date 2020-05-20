@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     NavigationView navigationView ;
     ImageView hamburger ;
-
     ViewPager2 viewPager ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,15 +90,15 @@ public class MainActivity extends AppCompatActivity {
                     switch ( menuItem.getItemId())
                     {
                         case R.id.newsfeed :
-                            viewPager.setCurrentItem(0);
+                            viewPager.setCurrentItem(0 ,false);
                             break;
 
                         case R.id.products :
-                            viewPager.setCurrentItem(1);
+                            viewPager.setCurrentItem(1,false);
                             break;
 
                         case R.id.favorites :
-                            viewPager.setCurrentItem(2);
+                            viewPager.setCurrentItem(2,false);
                             break;
 
 
