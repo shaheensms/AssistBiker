@@ -1,14 +1,17 @@
 package com.metacoders.assistbiker.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,14 +28,19 @@ import com.metacoders.assistbiker.database.CartDatabase;
 import com.metacoders.assistbiker.models.CartDbModel;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.sliderItem;
+import com.metacoders.assistbiker.requests.ServiceGenerator;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -47,6 +55,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     SliderView sliderView ;
     SliderAdapterExample adapter ;
     ArrayList<sliderItem> sliderItems  ;
+    private List<ProductsModel> productsList = new ArrayList<>();
     CartDatabase database ;
 
 
@@ -54,9 +63,21 @@ public class ProductDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+       // getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_product_detail);
+
+        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
+        }
+        if (Build.VERSION.SDK_INT >= 19) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);}
+
         database = Room.databaseBuilder(getApplicationContext(), CartDatabase.class, CartDatabase.DB_NAME).build();
         sliderItems = new ArrayList<>();
 
@@ -75,9 +96,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         singleProduct = (ProductsModel) i.getSerializableExtra("PRODUCT") ;
+        boolean isSingleProduct = i.getBooleanExtra("isSingle", false);
+        int  id = i.getIntExtra("productID" , 0) ;
       //  Log.d(TAG , singleProduct.getDate()+ " " + singleProduct.getProduct_title() ) ;
 
-        if(singleProduct == null) {
+        if(singleProduct == null && !isSingleProduct) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProductDetailActivity.this) ;
             alertDialog.setTitle("ERROR!!");
@@ -96,8 +119,49 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         }
-        else {
+
+        else if (!isSingleProduct) {
             loadTheViews(singleProduct) ;
+        }
+        else if(isSingleProduct)
+        {
+            // load the single  id  of the project
+            Call<List<ProductsModel>> call = ServiceGenerator
+                    .AllApi()
+                    .getSingleProduct(id);
+
+            call.enqueue(new Callback<List<ProductsModel>>() {
+                @Override
+                public void onResponse(Call<List<ProductsModel>> call, Response<List<ProductsModel>> response) {
+                    if(response.code() == 200)
+                    {
+                     //   ProductsModel model = new ProductsModel() ;
+
+                        productsList = response.body() ;
+
+                    if(productsList.size()>0) {
+
+                        singleProduct = productsList.get(0) ; // zero because there is only one  return in object
+
+                        loadTheViews(singleProduct); // loading the view
+                        Log.d("TAG", "onResponse: " +  singleProduct.getProduct_title()); ;
+                    }
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<ProductsModel>> call, Throwable t) {
+
+                }
+            }) ;
+
+
+        }
+        else
+        {
+
         }
 
         gotocart.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +189,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         cartDbModel.product_image =  singleProduct.getProduct_img1() ;
                         cartDbModel.product_id = singleProduct.getProduct_id() ;
 
-                           isItemAlreadyExist(cartDbModel);
+                        isItemAlreadyExist(cartDbModel);
 
                           //  Toast.makeText(getApplicationContext() , ""  + singleProduct.getProduct_id() , Toast.LENGTH_LONG).show();
                        // insertTheProduct(cartDbModel) ;
@@ -133,7 +197,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     }
 
 
-                }
+
+            }
 
         });
 
@@ -239,4 +304,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     }
+    public static void setWindowFlag(Activity activity, final int bits, boolean on) {
+        Window win = activity.getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);}
 }

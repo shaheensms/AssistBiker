@@ -57,6 +57,12 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
 
+        if(newsFeed.getIs_product().contains("true"))
+        {
+            holder.price.setVisibility(View.VISIBLE);
+        }
+        else  holder.price.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -95,12 +101,18 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
             int position = getAdapterPosition();
 //            itemClickListenter.onItemClick( v, position);
 
-            if (newsfeedList.get(position).getIs_product()) {
-                Intent intent = new Intent(ctx, ProductDetailActivity.class);
-                intent.putExtra("PRODUCT", newsfeedList.get(position));
-                ctx.startActivity(intent);
-            } else {
+            if (newsfeedList.get(position).getIs_product().equals("false")) {
                 Intent intent = new Intent(ctx, NewsDetailsActivity.class);
+                intent.putExtra("image", newsfeedList.get(position).getImage());
+                intent.putExtra("title", newsfeedList.get(position).getTitle());
+                intent.putExtra("desc" , newsfeedList.get(position).getDescription()) ;
+
+                ctx.startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(ctx, ProductDetailActivity.class);
+                intent.putExtra("isSingle" , true) ;
+                intent.putExtra("productID" ,newsfeedList.get(position).getProduct_id()) ;
                 ctx.startActivity(intent);
             }
         }

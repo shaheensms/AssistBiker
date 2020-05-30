@@ -1,6 +1,7 @@
 package com.metacoders.assistbiker.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.models.ProductsModel;
@@ -35,7 +37,7 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsTrendAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewsTrendAdapter.ViewHolder holder,final int position) {
 
         ProductsModel newsFeed = newsfeedList.get(position);
 
@@ -49,6 +51,17 @@ public class NewsTrendAdapter extends RecyclerView.Adapter<NewsTrendAdapter.View
                 .thumbnail(0.25f)
                 .placeholder(R.drawable.placeholder)
                 .into(holder.image);
+
+        holder.itemView.setOnClickListener(v -> {
+
+            Intent i = new Intent(ctx, ProductDetailActivity.class);
+            ProductsModel singleProduct = new ProductsModel();
+            singleProduct = newsfeedList.get(position);
+            i.putExtra("PRODUCT", singleProduct);
+            //  Toasty.warning(context , singleProduct.getProduct_title() , Toasty.LENGTH_SHORT).show();
+            ctx.startActivity(i);
+
+        });
 
     }
 
