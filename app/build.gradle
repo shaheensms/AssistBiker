@@ -95,4 +95,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    // Zigzag View
+    implementation 'com.github.beigirad:ZigzagView:1.0.6'
+
 }
