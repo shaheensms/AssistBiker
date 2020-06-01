@@ -18,6 +18,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface api {
 
@@ -40,5 +41,8 @@ public interface api {
     Observable<List<ProductsModel>> getLatestProducts();//   Flowable<List<ProductsModel>> getProductss ();
     @GET("customers/newsfeed")
     Observable<List<NewsFeedModel>> getNewsFeeds ();
+
+    @GET("products/{id}")
+    Call<List<ProductsModel>> getSingleProduct(@Path("id") int ID);
 
 }

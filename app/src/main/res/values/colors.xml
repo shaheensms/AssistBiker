@@ -10,4 +10,5 @@
     <color name="colorTextHeading">#515C6F</color>
     <color name="recylerviewBackground">#F4F5F8</color>
     <color name="colorGrayishBlack">#4A4A4A</color>
+    <color name="transperantWhite">#BFFFFFFF</color>
 </resources>

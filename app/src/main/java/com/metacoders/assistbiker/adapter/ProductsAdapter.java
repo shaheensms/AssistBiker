@@ -54,7 +54,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 .load(Constants.IMAGE_URL + product.getProduct_img1())
                 .thumbnail(0.25f)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .thumbnail(/*sizeMultiplier=*/ 0.25f)
                 .error(R.drawable.placeholder)
                 .into(holder.pImage);
 

@@ -18,7 +18,7 @@ public class NewsFeedModel implements Serializable {
     private String description;
     @Expose
     @SerializedName("is_product")
-    private Boolean is_product;
+    private String is_product;
     @Expose
     @SerializedName("product_id")
     private Integer product_id;
@@ -32,7 +32,7 @@ public class NewsFeedModel implements Serializable {
     public NewsFeedModel() {
     }
 
-    public NewsFeedModel(String title, String image, String description, Boolean is_product, Integer product_id, Integer newsfeed_id, Float product_price) {
+    public NewsFeedModel(String title, String image, String description, String is_product, Integer product_id, Integer newsfeed_id, Float product_price) {
         this.title = title;
         this.image = image;
         this.description = description;
@@ -66,11 +66,11 @@ public class NewsFeedModel implements Serializable {
         this.description = description;
     }
 
-    public Boolean getIs_product() {
+    public String getIs_product() {
         return is_product;
     }
 
-    public void setIs_product(Boolean is_product) {
+    public void setIs_product(String is_product) {
         this.is_product = is_product;
     }
 
