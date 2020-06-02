@@ -98,4 +98,6 @@ dependencies {
     // Zigzag View
     implementation 'com.github.beigirad:ZigzagView:1.0.6'
 
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+
 }

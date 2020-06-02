@@ -24,14 +24,16 @@
                 android:layout_marginRight="32dp"
                 android:orientation="vertical">
 
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/baal_pafji"
                     android:text="Address &amp; Payment"
                     android:textColor="#000000"
-                    android:textSize="36sp" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,13 +54,13 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <Spinner
-                    android:id="@+id/spinner"
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/zoneSpinner"
                     android:layout_width="match_parent"
+                    app:fontFamily="@font/regular_bala_paji"
                     android:layout_height="wrap_content"
-                    android:entries="Location 1, Location 2"
                     android:padding="16dp"
-                    android:spinnerMode="dropdown" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,12 +100,14 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <Spinner
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/paymentMethodSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="Location 1, Location 2"
-                    android:padding="16dp"
-                    android:spinnerMode="dropdown" />
+                    app:fontFamily="@font/regular_bala_paji"
+
+                    android:padding="6dp"
+                     />
 
             </LinearLayout>
 

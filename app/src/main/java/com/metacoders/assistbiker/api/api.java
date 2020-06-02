@@ -9,6 +9,7 @@ import com.metacoders.assistbiker.models.Sent_Response_login;
 import com.metacoders.assistbiker.models.Sent_Response_mobile;
 import com.metacoders.assistbiker.models.Sent_Response_register;
 import com.metacoders.assistbiker.models.testModel;
+import com.metacoders.assistbiker.models.zoneResponse;
 
 import java.util.List;
 
@@ -44,5 +45,9 @@ public interface api {
 
     @GET("products/{id}")
     Call<List<ProductsModel>> getSingleProduct(@Path("id") int ID);
+
+    @GET("cart/zone")
+    Call<List<zoneResponse>> getZone() ;
+
 
 }
