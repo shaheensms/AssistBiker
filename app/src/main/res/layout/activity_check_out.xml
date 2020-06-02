@@ -425,7 +425,7 @@
                             </LinearLayout>
                         </LinearLayout>
 
-                        <EditText
+                        <TextView
                             android:id="@+id/deliveryLocationInvoice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -434,7 +434,6 @@
                             android:text="NO Address Assainged"
                             android:textAlignment="viewStart"
                             android:textSize="12sp" />
-
 
                     </LinearLayout>
 
