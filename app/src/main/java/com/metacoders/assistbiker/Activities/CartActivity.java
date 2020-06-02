@@ -8,12 +8,15 @@ import androidx.room.Room;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
+import com.metacoders.assistbiker.CheckOutActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.CartRecylerViewAdapter;
 import com.metacoders.assistbiker.database.CartDatabase;
@@ -33,6 +36,8 @@ public class CartActivity extends AppCompatActivity {
    public TextView TotalTextView;
     double toatalAmount = 0.0 ;
     CardView cartContainer  ;
+    MaterialButton checkOutBtn ;
+
     LinearLayout emptyLayout  ;
     ArrayList<CartDbModel> cartList = new ArrayList<>();
     @Override
@@ -48,7 +53,7 @@ public class CartActivity extends AppCompatActivity {
         TotalTextView = findViewById(R.id.totalView) ;
         emptyLayout = findViewById(R.id.emptyView) ;
         cartContainer = findViewById(R.id.cartContainer) ;
-
+        checkOutBtn = findViewById(R.id.checkOutBtn);
         emptyLayout.setVisibility(View.GONE);
 
         cartRecylerview.setLayoutManager(new LinearLayoutManager(this));
@@ -57,6 +62,12 @@ public class CartActivity extends AppCompatActivity {
 
         loadAllCartItem();
 
+        checkOutBtn.setOnClickListener(v -> {
+
+            Intent i = new Intent(getApplicationContext() , CheckOutActivity.class);
+            startActivity(i);
+
+        });
 
 
     }
