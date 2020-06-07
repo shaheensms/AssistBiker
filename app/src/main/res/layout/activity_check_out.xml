@@ -576,6 +576,7 @@
             <com.google.android.material.button.MaterialButton
                 android:layout_width="@dimen/_128sdp"
                 android:layout_height="@dimen/_48sdp"
+                android:id="@+id/place_order_btn"
                 android:backgroundTint="@color/colorGreen"
                 android:text="Place Order" />
 

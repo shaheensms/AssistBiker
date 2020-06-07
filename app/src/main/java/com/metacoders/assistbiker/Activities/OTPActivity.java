@@ -212,8 +212,7 @@ public class OTPActivity extends AppCompatActivity {
             public void onResponse(Call<Response_register> call, Response<Response_register> response) {
 
 
-                if(response.code() ==200)
-                {
+                if(response.code() ==200) {
 
                     // check the response
 
@@ -232,16 +231,14 @@ public class OTPActivity extends AppCompatActivity {
                         finish();
 
                     }
-                    else
-                  {
+                    else {
                         RegisterNewUser();
                     }
 
 
 
                 }
-                else
-                 {
+                else {
                      // request again
                      RegisterNewUser();
 
