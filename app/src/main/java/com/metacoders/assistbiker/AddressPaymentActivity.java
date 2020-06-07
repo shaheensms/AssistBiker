@@ -2,11 +2,12 @@ package com.metacoders.assistbiker;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
-import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.zoneResponse;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 
@@ -22,40 +23,63 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.metacoders.assistbiker.R.drawable.ic_baseline_check_circle_24;
+import static com.metacoders.assistbiker.R.drawable.ic_baseline_radio_button_unchecked_24;
+
 public class AddressPaymentActivity extends AppCompatActivity {
 
-    NiceSpinner zoneSpinner , paymentSpinner  ;
-    List<String> dataset = new LinkedList<>(Arrays.asList( "Select A Payment Method" ,  "Cash On Delivery", "Bkash"));
-    String paymentMethod ;
+    NiceSpinner zoneSpinner, paymentSpinner;
+    List<String> dataset = new LinkedList<>(Arrays.asList("Select A Payment Method", "Cash On Delivery", "Bkash"));
+    String paymentMethod;
+    private CardView mCashOnCard, mBkashCard;
+    private TextView mCashOnTV, mBkashTV;
     private List<zoneResponse> zoneList = new ArrayList<>();
     private List<String> newList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_payment);
         getSupportActionBar().hide();
         paymentSpinner = (NiceSpinner) findViewById(R.id.paymentMethodSpinner);
-        zoneSpinner = findViewById(R.id.zoneSpinner) ;
+        mCashOnCard = (CardView) findViewById(R.id.cash_on_card);
+        mBkashCard = (CardView) findViewById(R.id.bkash_card);
+        mCashOnTV = (TextView) findViewById(R.id.cash_on_tv);
+        mBkashTV = (TextView) findViewById(R.id.bkash_tv);
+        zoneSpinner = findViewById(R.id.zoneSpinner);
 
         paymentSpinner.attachDataSource(dataset);
-
-
 
         paymentSpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
             @Override
             public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
 
-                paymentMethod = paymentSpinner.getSelectedItem().toString() ;
+                paymentMethod = paymentSpinner.getSelectedItem().toString();
 
-                Toast.makeText(getApplicationContext() ,paymentMethod , Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), paymentMethod, Toast.LENGTH_SHORT).show();
             }
         });
 
-            loadZoneFromApi();
+        mCashOnCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCashOnTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, ic_baseline_check_circle_24, 0);
+                mBkashTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, ic_baseline_radio_button_unchecked_24, 0);
+            }
+        });
+
+        mBkashCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBkashTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, ic_baseline_check_circle_24, 0);
+                mCashOnTV.setCompoundDrawablesWithIntrinsicBounds(0, 0, ic_baseline_radio_button_unchecked_24, 0);
+            }
+        });
+
+        loadZoneFromApi();
     }
 
-    public  void loadZoneFromApi(){
+    public void loadZoneFromApi() {
         Call<List<zoneResponse>> call = ServiceGenerator
                 .AllApi()
                 .getZone();
@@ -68,23 +92,18 @@ public class AddressPaymentActivity extends AppCompatActivity {
                     newList.clear();
                     zoneList.clear();
                     zoneList = response.body();
-                    newList.add("Select Delivery Zone") ;
+                    newList.add("Select Delivery Zone");
 
-                    Toast.makeText(getApplicationContext(), zoneList.size() +" " , Toast.LENGTH_SHORT).show();
-                   //int limit = zoneList.size() ;
+                    Toast.makeText(getApplicationContext(), zoneList.size() + " ", Toast.LENGTH_SHORT).show();
+                    //int limit = zoneList.size() ;
 
-                   for(int i = 0 ; i< zoneList.size() ; i++ ){
-
-                       newList.add(zoneList.get(i).getZone_name() + " Charge = " + zoneList.get(i).getZone_charge()  ) ;
-                   }
-
-
+                    for (int i = 0; i < zoneList.size(); i++) {
+                        newList.add(zoneList.get(i).getZone_name() + " Charge = " + zoneList.get(i).getZone_charge());
+                    }
 
                     zoneSpinner.attachDataSource(newList);
 
-                }
-                else
-                {
+                } else {
                     // response didnot come through
 
                 }
@@ -95,7 +114,7 @@ public class AddressPaymentActivity extends AppCompatActivity {
             public void onFailure(Call<List<zoneResponse>> call, Throwable t) {
 
             }
-        }) ;
+        });
 
     }
 }
