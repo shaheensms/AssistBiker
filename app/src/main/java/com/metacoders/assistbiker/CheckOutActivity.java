@@ -3,6 +3,7 @@ package com.metacoders.assistbiker;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -15,29 +16,44 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.metacoders.assistbiker.Activities.MainActivity;
 import com.metacoders.assistbiker.adapter.CartRecylerViewAdapter_For_Fragment;
 import com.metacoders.assistbiker.adapter.checkOutCartAdapter;
+import com.metacoders.assistbiker.api.api;
 import com.metacoders.assistbiker.database.CartDatabase;
 import com.metacoders.assistbiker.fragments.fragment_cart;
 import com.metacoders.assistbiker.models.CartDbModel;
+import com.metacoders.assistbiker.models.Response_register;
+import com.metacoders.assistbiker.models.Sent_Response_cart;
+import com.metacoders.assistbiker.requests.ServiceGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CheckOutActivity extends AppCompatActivity {
 
     CartDatabase myDatabase ;
     RecyclerView orderList ;
-   checkOutCartAdapter cartAdapter  ;
+    checkOutCartAdapter cartAdapter  ;
     CartRecylerViewAdapter_For_Fragment.ViewHolder viewHolder  ;
     public static TextView TotalTextView;
     double toatalAmount = 0.0 ;
     Context context ;
-    ArrayList<CartDbModel> cartList = new ArrayList<>();
+   List<CartDbModel> cartList = new ArrayList<>();
     Activity activity ;
     CardView cartContainer  ;
+    TextView totalView  ;
     LinearLayout emptyLayout  ;
     LinearLayoutManager linearLayoutManager ;
+    MaterialButton placeOrder ;
 
 
     @Override
@@ -46,10 +62,22 @@ public class CheckOutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check_out);
 
          orderList = findViewById(R.id.listCartCheckOut) ;
+         totalView = findViewById(R.id.totalView) ;
+         placeOrder = findViewById(R.id.place_order_btn);
+
          linearLayoutManager = new LinearLayoutManager(this );
          orderList.setLayoutManager(linearLayoutManager);
 
         loadAllCartItem();
+
+
+        placeOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendResponseToTheServer();
+            }
+        });
 
 
     }
@@ -81,8 +109,10 @@ public class CheckOutActivity extends AppCompatActivity {
                     orderList.setAdapter(cartAdapter);
 
 
-//                    TotalTextView.setText(calculateTotal(todoList) + " BDT");
+                    totalView.setText(calculateTotal(todoList) + " BDT");
                     toatalAmount = 0.0  ;
+                    cartList = todoList ;
+
 
                 }
                 else
@@ -118,7 +148,64 @@ public class CheckOutActivity extends AppCompatActivity {
     }
 
 
+    public  void sendResponseToTheServer() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String orderList = gson.toJson(cartList); // all the order is in  This  String
+        api api = ServiceGenerator.AllApi() ;
+        Sent_Response_cart dataModel = new Sent_Response_cart(2 , 1200 ,"12/3/2015" , "pending" ,"null",
+                "cartList" , orderList , "test","test","test","test" );
 
+        Call<Response_register> response_Call = api.postCartList(dataModel) ;
+
+        response_Call.enqueue(new Callback<Response_register>() {
+            @Override
+            public void onResponse(Call<Response_register> call, Response<Response_register> response) {
+
+                if(response.code() ==200) {
+
+                    // check the response
+
+                    Response_register resp = response.body();
+
+                    if(resp.getMsg().equals("successfull"))
+                    {
+                        String userID =  resp.getData() ;
+
+                      //  dialog.dismiss();
+                        Toasty.success(getApplicationContext() , "Cart ID - " + userID  , Toasty.LENGTH_LONG)
+                                .show();
+                        finish();
+
+                    }
+                    else {
+                        Toasty.success(getApplicationContext() , "ERROR " , Toasty.LENGTH_LONG)
+                                .show();
+                    }
+
+
+
+                }
+                else {
+                    // request again
+                    Toasty.success(getApplicationContext() , "ERROR " , Toasty.LENGTH_LONG)
+                            .show();
+
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Response_register> call, Throwable t) {
+
+                Toasty.success(getApplicationContext() , "ERROR :  " + t.getMessage() , Toasty.LENGTH_LONG)
+                        .show();
+            }
+        });
+
+    }
 
 
 

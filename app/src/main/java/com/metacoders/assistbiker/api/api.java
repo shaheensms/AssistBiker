@@ -5,6 +5,7 @@ import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.ResponseModel;
 import com.metacoders.assistbiker.models.Response_login;
 import com.metacoders.assistbiker.models.Response_register;
+import com.metacoders.assistbiker.models.Sent_Response_cart;
 import com.metacoders.assistbiker.models.Sent_Response_login;
 import com.metacoders.assistbiker.models.Sent_Response_mobile;
 import com.metacoders.assistbiker.models.Sent_Response_register;
@@ -29,6 +30,10 @@ public interface api {
     Call<Response_login>postUserLoagin(@Body Sent_Response_login body ) ;
     @POST("customers/create")
     Call<Response_register>postUserRegister(@Body Sent_Response_register body ) ;
+
+    @POST("cart/create")
+    Call<Response_register>postCartList(@Body Sent_Response_cart body ) ;
+
     @GET("customers/newsfeed")
     Call<List<NewsFeedModel>> getNewsFeed ();
     @POST("customers/check_number")
