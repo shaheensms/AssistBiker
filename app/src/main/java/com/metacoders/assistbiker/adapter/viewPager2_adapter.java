@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.metacoders.assistbiker.fragments.ProfileFragment;
 import com.metacoders.assistbiker.fragments.fragment_cart;
 import com.metacoders.assistbiker.fragments.fragment_newsfeed;
 import com.metacoders.assistbiker.fragments.fragment_products;
 
 public class viewPager2_adapter extends FragmentStateAdapter {
 
-    private String[] titles = new String[]{"Home", "Products", "Cart"};
+    private String[] titles = new String[]{"Home", "Products", "Cart" , "Profile"};
 
     public viewPager2_adapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -28,6 +29,8 @@ public class viewPager2_adapter extends FragmentStateAdapter {
 
             case 2 :
                 return  new fragment_cart() ;
+            case 3 :
+                return  new ProfileFragment() ;
         }
 
         return new fragment_newsfeed();
@@ -37,6 +40,6 @@ public class viewPager2_adapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return 4;
     }
 }

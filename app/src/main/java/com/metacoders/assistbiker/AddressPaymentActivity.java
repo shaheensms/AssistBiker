@@ -41,24 +41,24 @@ public class AddressPaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_payment);
         getSupportActionBar().hide();
-        paymentSpinner = (NiceSpinner) findViewById(R.id.paymentMethodSpinner);
+
         mCashOnCard = (CardView) findViewById(R.id.cash_on_card);
         mBkashCard = (CardView) findViewById(R.id.bkash_card);
         mCashOnTV = (TextView) findViewById(R.id.cash_on_tv);
         mBkashTV = (TextView) findViewById(R.id.bkash_tv);
         zoneSpinner = findViewById(R.id.zoneSpinner);
 
-        paymentSpinner.attachDataSource(dataset);
+ //       paymentSpinner.attachDataSource(dataset);
 
-        paymentSpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
-            @Override
-            public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
-
-                paymentMethod = paymentSpinner.getSelectedItem().toString();
-
-                Toast.makeText(getApplicationContext(), paymentMethod, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        paymentSpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
+//
+//                paymentMethod = paymentSpinner.getSelectedItem().toString();
+//
+//                Toast.makeText(getApplicationContext(), paymentMethod, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         mCashOnCard.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,5 +17,10 @@
         android:icon="@drawable/ic_bike_black_24dp"
         android:title="Cart"
         />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Profile"
+        />
 
 </menu>
