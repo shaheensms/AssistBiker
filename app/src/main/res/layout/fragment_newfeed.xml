@@ -1,86 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/recylerviewBackground"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-<androidx.core.widget.NestedScrollView
-    android:fitsSystemWindows="true"
-    android:background="@color/recylerviewBackground"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/recylerviewBackground"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/recylerviewBackground"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/recylerviewBackground"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/baala_paji"
+                    android:lineSpacingExtra="-7dp"
+                    android:text="Top Picks"
+                    android:textColor="@color/colorTextHeading"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/regular_bala_paji"
+                    android:gravity="end"
+                    android:lineSpacingExtra="-7dp"
+                    android:text="See All"
+                    android:textColor="@color/colorTextHeading"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trending_news_feed_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/recylerviewBackground"
+                android:orientation="horizontal" />
+
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="17sp"
-                android:lineSpacingExtra="-7dp"
+                android:layout_margin="8dp"
                 android:fontFamily="@font/baala_paji"
-                android:textStyle="bold"
-                android:layout_margin="8dp"
-                android:textColor="@color/colorTextHeading"
-                android:text="Top Picks" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:textSize="14sp"
                 android:lineSpacingExtra="-7dp"
-                android:fontFamily="@font/regular_bala_paji"
-                android:layout_margin="8dp"
+                android:text="Latest Feeds"
                 android:textColor="@color/colorTextHeading"
-                android:text="See All" />
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_feed_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/recylerviewBackground"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trending_news_feed_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="225dp"
-            android:background="@color/recylerviewBackground"
-            android:orientation="horizontal"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:layout_margin="8dp"
-            android:lineSpacingExtra="-7dp"
-            android:fontFamily="@font/baala_paji"
-            android:textColor="@color/colorTextHeading"
-            android:text="Latest Feeds" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/news_feed_recyclerview"
-            android:layout_width="match_parent"
-            android:background="@color/recylerviewBackground"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="vertical" />
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>
