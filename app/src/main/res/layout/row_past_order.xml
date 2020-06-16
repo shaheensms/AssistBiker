@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_margin="@dimen/_5sdp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -21,21 +22,26 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/order_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Order 54688a84ea8e8"
+                    android:fontFamily="@font/baala_paji"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/date"
+                    android:fontFamily="@font/regular_bala_paji"
                     android:text="Placed on 16 jan 2020"
-                    android:textSize="11sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:text="Paid on 25 jan 2020"
                     android:textSize="11sp" />
 
@@ -45,15 +51,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Paid"
+                android:id="@+id/status"
+                android:text="Pending"
+                android:fontFamily="@font/nunito_semi_bold"
                 android:textStyle="italic" />
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,18 +68,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="4dp"
+                android:fontFamily="@font/regular_bala_paji"
                 android:layout_marginEnd="4dp"
+                android:textSize="16sp"
+                android:id="@+id/count"
                 android:text="2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textSize="16sp"
+                android:fontFamily="@font/regular_bala_paji"
                 android:text="Items, Total: " />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="4dp"
+                android:id="@+id/price"
+                android:textSize="16sp"
+                android:fontFamily="@font/regular_bala_paji"
                 android:layout_marginEnd="4dp"
                 android:drawableStart="@mipmap/taka_icon_18"
                 android:drawableTint="@color/colorAccent"

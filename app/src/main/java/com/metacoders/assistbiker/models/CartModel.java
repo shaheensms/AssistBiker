@@ -1,9 +1,13 @@
 package com.metacoders.assistbiker.models;
 
-public class CartModel {
+import java.io.Serializable;
+
+public class CartModel implements Serializable  {
     String title ;
     Float price ;
     Integer quantity , id ;
+    String product_image;
+
 
     public CartModel() {
     }
@@ -13,6 +17,14 @@ public class CartModel {
         this.price = price;
         this.quantity = quantity;
         this.id = id;
+    }
+
+    public String getProduct_image() {
+        return product_image;
+    }
+
+    public void setProduct_image(String product_image) {
+        this.product_image = product_image;
     }
 
     public String getTitle() {

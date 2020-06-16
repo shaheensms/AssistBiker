@@ -9,7 +9,7 @@ import com.metacoders.assistbiker.database.CartDatabase;
 import java.io.Serializable;
 
 @Entity(tableName = CartDatabase.TABLE_NAME_CART)
-public class CartDbModel implements Serializable {
+public class CartDbModel {
 
 
     @PrimaryKey(autoGenerate = true)

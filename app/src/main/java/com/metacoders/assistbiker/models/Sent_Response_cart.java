@@ -3,8 +3,12 @@ package com.metacoders.assistbiker.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public  class Sent_Response_cart {
+import java.io.Serializable;
 
+public  class Sent_Response_cart implements Serializable {
+
+    @Expose
+    @SerializedName("order_id")  private  int  order_id  ;
     @Expose
     @SerializedName("customer_id")  private  int  customer_id  ;
     @Expose
@@ -43,6 +47,14 @@ public  class Sent_Response_cart {
         this.delivery_zone = delivery_zone;
         this.delivery_address = delivery_address;
         this.test = test;
+    }
+
+    public int getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
 
     public int getCustomer_id() {

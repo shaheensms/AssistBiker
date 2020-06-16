@@ -69,6 +69,7 @@ public class fragment_products extends Fragment {
 
 
     private void loadProducts() {
+
         Call<List<ProductsModel>> call = ServiceGenerator
                 .AllApi()
                 .getProducts();

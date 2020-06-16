@@ -33,7 +33,6 @@ public interface api {
 
     @POST("cart/create")
     Call<Response_register>postCartList(@Body Sent_Response_cart body ) ;
-
     @GET("customers/newsfeed")
     Call<List<NewsFeedModel>> getNewsFeed ();
     @POST("customers/check_number")
@@ -54,5 +53,7 @@ public interface api {
     @GET("cart/zone")
     Call<List<zoneResponse>> getZone() ;
 
+    @GET("cart/all/{type}&{ID}")
+    Call<List<Sent_Response_cart>> getPastOrders(@Path("type") int TYPE , @Path("ID") int ID);
 
 }

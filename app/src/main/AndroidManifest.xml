@@ -11,7 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PreviousOrdersActivity"></activity>
+        <activity android:name=".PreviousOrdersListActivity"
+        android:theme="@style/AppThemeNoAction">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".AddressPaymentActivity"></activity>
         <activity android:name=".CheckOutActivity" />
         <activity android:name=".OrderDetailsActivity" />
@@ -33,11 +42,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeNoAction"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
