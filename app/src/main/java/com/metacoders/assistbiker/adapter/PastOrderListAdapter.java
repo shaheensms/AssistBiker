@@ -2,69 +2,59 @@ package com.metacoders.assistbiker.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.OrderDetailsActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.CartModel;
-import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.Sent_Response_cart;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public  class past_order_list_adapter extends RecyclerView.Adapter <past_order_list_adapter.ViewHolder> {
+public class PastOrderListAdapter extends RecyclerView.Adapter<PastOrderListAdapter.ViewHolder> {
 
-    private  List<Sent_Response_cart> orders  = new ArrayList<>();
+    private List<Sent_Response_cart> orders = new ArrayList<>();
     List<CartModel> students = new ArrayList<>();
-    private  Context context ;
-    CartModel student ;
+    private Context context;
+    CartModel student;
 
-    public past_order_list_adapter(List<Sent_Response_cart> orders, Context context) {
+    public PastOrderListAdapter(List<Sent_Response_cart> orders, Context context) {
         this.orders = orders;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public past_order_list_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PastOrderListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_past_order, parent, false);
-        past_order_list_adapter.ViewHolder viewHolder = new past_order_list_adapter.ViewHolder(view);
+        PastOrderListAdapter.ViewHolder viewHolder = new PastOrderListAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull past_order_list_adapter.ViewHolder holder, final  int position) {
+    public void onBindViewHolder(@NonNull PastOrderListAdapter.ViewHolder holder, final int position) {
 
-        Sent_Response_cart item = orders.get(position) ;
+        Sent_Response_cart item = orders.get(position);
 
 
         holder.orderID.setText("Order Id : app_" + item.getOrder_id());
         holder.status.setText(item.getOrder_status());
-        holder.textPrice.setText(item.getDue_amount()+ "");
-        holder.date.setText("Orderd On : "+ item.getOrder_date());
+        holder.textPrice.setText(item.getDue_amount() + "");
+        holder.date.setText("Ordered On : " + item.getOrder_date());
 
-        try{
+        try {
          //   Gson g = new Gson();
          //   CartModel p = g.fromJson(item.getOrder_list(), CartModel.class) ;
 
@@ -94,7 +84,11 @@ public  class past_order_list_adapter extends RecyclerView.Adapter <past_order_l
 
                 Intent i = new Intent(context, OrderDetailsActivity.class);
 
-                i.putExtra("list" , item.getOrder_list()) ;
+                i.putExtra("list", item.getOrder_list());
+                i.putExtra("order_id", item.getOrder_id());
+                i.putExtra("order_date", item.getOrder_date());
+                i.putExtra("order_status", item.getOrder_status());
+                i.putExtra("order_price", item.getDue_amount());
                 //  Toasty.warning(context , singleProduct.getProduct_title() , Toasty.LENGTH_SHORT).show();
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
