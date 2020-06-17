@@ -98,8 +98,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     // Zigzag View
     implementation 'com.github.beigirad:ZigzagView:1.0.6'
-
+    // Nice Spinner
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+    // Circle Image View
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
 
