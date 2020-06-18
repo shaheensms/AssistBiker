@@ -1,16 +1,19 @@
 package com.metacoders.assistbiker.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.metacoders.assistbiker.ProfileEditDialog;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.Sent_Response_register;
@@ -49,6 +52,7 @@ public class ProfileFragment extends Fragment implements ProfileEditDialog.Profi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false);
+        context = view.getContext();
 
         initializations();
         loadProfile();
@@ -82,8 +86,27 @@ public class ProfileFragment extends Fragment implements ProfileEditDialog.Profi
     }
 
     private void openDialog() {
-        ProfileEditDialog profileEditDialog = new ProfileEditDialog();
-        profileEditDialog.show(getFragmentManager(), "Profile Edit Dialog");
+         TextInputEditText mName, mNumber, mEmail, mAddress;
+
+        // creating a dialogue with custom design
+        final Dialog profileDialogue = new Dialog(context);
+        profileDialogue.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        profileDialogue.setContentView(R.layout.dialog_profile_information);
+
+        mName = (TextInputEditText) profileDialogue.findViewById(R.id.name);
+        mNumber = (TextInputEditText) profileDialogue.findViewById(R.id.phone);
+        mEmail = (TextInputEditText) profileDialogue.findViewById(R.id.email);
+        mAddress = (TextInputEditText) profileDialogue.findViewById(R.id.address);
+
+        // Add button  on  design the use as normal ......
+
+
+        profileDialogue.show();
+
+
+
+
+
 
     }
 

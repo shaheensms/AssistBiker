@@ -18,15 +18,19 @@ public class ProfileEditDialog extends AppCompatDialogFragment {
 
     private TextInputEditText mName, mNumber, mEmail, mAddress;
     private ProfileDialogListener listener;
+    private  Context context ;
+
+
+    public ProfileEditDialog(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_profile_information, null);
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view)
                 .setTitle("Edit Profile Information")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -53,17 +57,6 @@ public class ProfileEditDialog extends AppCompatDialogFragment {
         mAddress = (TextInputEditText) view.findViewById(R.id.address);
 
         return builder.create();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        try {
-            listener = (ProfileDialogListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "Must Implement ProfileEditDialog");
-        }
     }
 
     public interface ProfileDialogListener {
