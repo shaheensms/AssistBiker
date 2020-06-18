@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.metacoders.assistbiker.ProfileEditDialog;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.Sent_Response_register;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
@@ -27,7 +28,7 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileEditDialog.ProfileDialogListener {
 
     Context context;
     private View view;
@@ -51,8 +52,39 @@ public class ProfileFragment extends Fragment {
 
         initializations();
         loadProfile();
+        onclickActions();
 
         return view;
+    }
+
+    private void onclickActions() {
+
+        mPiEditTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+        mCiEditTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+        mAdEditTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+    }
+
+    private void openDialog() {
+        ProfileEditDialog profileEditDialog = new ProfileEditDialog();
+        profileEditDialog.show(getFragmentManager(), "Profile Edit Dialog");
+
     }
 
     private void loadProfile() {
@@ -106,5 +138,15 @@ public class ProfileFragment extends Fragment {
         mNotificationsCard = view.findViewById(R.id.notification_card);
         mChangePassCard = view.findViewById(R.id.change_pass_card);
         mLogoutCard = view.findViewById(R.id.logout_card);
+    }
+
+    @Override
+    public void updateText(String name, String phone, String email, String address) {
+        mProfileNameTV.setText(name);
+        mProfileEmailTV.setText(email);
+        mUsernameTV.setText(name);
+        mUserEmailTV.setText(email);
+        mUserPhoneTV.setText(phone);
+        mUserAddressTV.setText(address);
     }
 }
