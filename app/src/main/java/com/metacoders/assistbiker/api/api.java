@@ -15,7 +15,6 @@ import com.metacoders.assistbiker.models.zoneResponse;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -45,15 +44,18 @@ public interface api {
     @GET("products/latest")
     Observable<List<ProductsModel>> getLatestProducts();//   Flowable<List<ProductsModel>> getProductss ();
     @GET("customers/newsfeed")
-    Observable<List<NewsFeedModel>> getNewsFeeds ();
+    Observable<List<NewsFeedModel>> getNewsFeeds();
 
     @GET("products/{id}")
     Call<List<ProductsModel>> getSingleProduct(@Path("id") int ID);
 
     @GET("cart/zone")
-    Call<List<zoneResponse>> getZone() ;
+    Call<List<zoneResponse>> getZone();
 
     @GET("cart/all/{type}&{ID}")
-    Call<List<Sent_Response_cart>> getPastOrders(@Path("type") int TYPE , @Path("ID") int ID);
+    Call<List<Sent_Response_cart>> getPastOrders(@Path("type") int TYPE, @Path("ID") int ID);
+
+    @GET("customers/user/{ID}")
+    Call<List<Sent_Response_register>> getProfile(@Path("ID") int ID);
 
 }

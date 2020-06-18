@@ -1,15 +1,12 @@
 package com.metacoders.assistbiker;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.metacoders.assistbiker.adapter.past_order_list_adapter;
-import com.metacoders.assistbiker.models.ProductsModel;
+import com.metacoders.assistbiker.adapter.PastOrderListAdapter;
 import com.metacoders.assistbiker.models.Sent_Response_cart;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 
@@ -23,9 +20,9 @@ import retrofit2.Response;
 
 public class PreviousOrdersListActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView ;
+    RecyclerView recyclerView;
     LinearLayoutManager manager;
-    past_order_list_adapter adapter ;
+    PastOrderListAdapter adapter;
     private List<Sent_Response_cart> past_order_list = new ArrayList<>();
 
     @Override
@@ -42,28 +39,25 @@ public class PreviousOrdersListActivity extends AppCompatActivity {
 
         loadPastOrders();
     }
-    void loadPastOrders()
-    {
+
+    void loadPastOrders() {
         Call<List<Sent_Response_cart>> call = ServiceGenerator
                 .AllApi()
-                .getPastOrders(1 , 2); // here type = 1 means all orders of the customer id  = ID
+                .getPastOrders(1, 2); // here type = 1 means all orders of the customer id  = ID
 
 
         call.enqueue(new Callback<List<Sent_Response_cart>>() {
             @Override
             public void onResponse(Call<List<Sent_Response_cart>> call, Response<List<Sent_Response_cart>> response) {
 
-                if(response.isSuccessful() && response.code()==200)
-                {
-                    past_order_list = response.body() ;
+                if (response.isSuccessful() && response.code() == 200) {
+                    past_order_list = response.body();
 
-                    adapter = new past_order_list_adapter(past_order_list , getApplicationContext()) ;
+                    adapter = new PastOrderListAdapter(past_order_list, getApplicationContext());
                     recyclerView.setAdapter(adapter);
 
-                }
-                else
-                {
-                    Toasty.error(getApplicationContext(), response.errorBody().toString() + " "  +response.code(), Toasty.LENGTH_SHORT).show();
+                } else {
+                    Toasty.error(getApplicationContext(), response.errorBody().toString() + " " + response.code(), Toasty.LENGTH_SHORT).show();
 
                 }
             }
@@ -71,11 +65,10 @@ public class PreviousOrdersListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Sent_Response_cart>> call, Throwable t) {
 
-                Toasty.error(getApplicationContext(), t.getMessage() + " " , Toasty.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), t.getMessage() + " ", Toasty.LENGTH_SHORT).show();
 
             }
         });
-
 
 
     }
