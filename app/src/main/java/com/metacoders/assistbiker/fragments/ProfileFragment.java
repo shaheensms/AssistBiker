@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
     private TextView mPiEditTV, mCiEditTV, mAdEditTV;
     private TextView mUsernameTV, mUserPhoneTV, mUserEmailTV, mUserAddressTV;
     private List<Sent_Response_register> profileInfoList = new ArrayList<>();
+    String oldPassword  , oldImage , oldeName  ;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -90,7 +91,7 @@ public class ProfileFragment extends Fragment {
 
     private void openDialog() {
 
-        TextInputEditText mName, mNumber, mEmail, mAddress;
+        TextInputEditText mName, mNumber, mEmail, mAddress , mNumber2 ;
         Button mOk, mCancel;
 
         // creating a dialogue with custom design
@@ -102,6 +103,7 @@ public class ProfileFragment extends Fragment {
         mNumber = (TextInputEditText) profileDialogue.findViewById(R.id.phone);
         mEmail = (TextInputEditText) profileDialogue.findViewById(R.id.email);
         mAddress = (TextInputEditText) profileDialogue.findViewById(R.id.address);
+        mNumber2 = profileDialogue.findViewById(R.id.phone2) ;
         mOk = (Button) profileDialogue.findViewById(R.id.ok_button);
         mCancel = (Button) profileDialogue.findViewById(R.id.cancel_button);
 
@@ -115,6 +117,8 @@ public class ProfileFragment extends Fragment {
                 String phone = mNumber.getText().toString();
                 String email = mEmail.getText().toString();
                 String address = mAddress.getText().toString();
+                String phone2 = mNumber2.getText().toString() ;
+
 
                 mProfileNameTV.setText(name);
                 mProfileEmailTV.setText(email);
@@ -123,9 +127,10 @@ public class ProfileFragment extends Fragment {
                 mUserEmailTV.setText(email);
                 mUserAddressTV.setText(address);
 
+
                 profileDialogue.dismiss();
 
-                updateProfile(name, phone, email, address);
+                updateProfile(name, phone, email, address, phone2);
             }
         });
 
@@ -137,12 +142,14 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void updateProfile(String name, String phone, String email, String address) {
+    private void updateProfile(String name, String phone, String email, String address, String phone2) {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(phone)) {
             api api = ServiceGenerator.AllApi();
+//String customer_email, String customer_pass, String customer_contact, String customer_contact2, String customer_image, String customer_name, String customer_address) {
 
             // build the model
-            Sent_Response_register response_register = new Sent_Response_register(email, "", phone, "null", "null", name, address);
+            // TODO customer id HERE
+           Sent_Response_register response_register = new Sent_Response_register("2",email , oldPassword, phone, phone2 ,  oldImage, name, address);
 
             Call<Response_register> updateCall = api.postUserUpdate(response_register);
 
@@ -150,11 +157,38 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Response_register> call, Response<Response_register> response) {
 
+                    if(response.isSuccessful() && response.code() == 200)
+                    {
+
+                        Response_register responseRegister = response.body() ;
+
+
+                        if(responseRegister.getMsg().equals("successfull"))
+                        {
+
+                            Toasty.success(context , "Profile Updated !!", Toasty.LENGTH_SHORT).show();
+
+                        }
+                        else
+                        {
+                            // something went wrong !!!
+                            Toasty.error(context , "Something Error  !!", Toasty.LENGTH_SHORT).show();
+                            Log.d("TAG", "onResponse: " +  response.errorBody());
+                        }
+
+
+                    }
+                    else {
+
+
+                        Log.d("TAG", "onResponse: " +  response.errorBody());
+                    }
+
                 }
 
                 @Override
                 public void onFailure(Call<Response_register> call, Throwable t) {
-
+                    Log.d("TAG", "onResponse: " +  t.getMessage());
                 }
             });
         }
@@ -163,7 +197,8 @@ public class ProfileFragment extends Fragment {
     private void loadProfile() {
         Call<List<Sent_Response_register>> call = ServiceGenerator
                 .AllApi()
-                .getProfile(2);
+                .getProfile(2); // TODO change the id of the user
+
 
         call.enqueue(new Callback<List<Sent_Response_register>>() {
             @Override
@@ -179,16 +214,20 @@ public class ProfileFragment extends Fragment {
                     mUserEmailTV.setText(profile.getCustomer_email());
                     mUserPhoneTV.setText(profile.getCustomer_contact());
                     mUserAddressTV.setText(profile.getCustomer_address());
+                    oldPassword = profile.getCustomer_pass() ;
+                    oldImage = profile.getCustomer_image() ;
+                    oldeName = profile.getCustomer_name() ;
+
 
                     Log.d(TAG, "onResponse: Profile" + profileInfoList.toString());
                 } else {
-                    Toasty.error(getContext(), response.errorBody().toString() + " " + response.code(), Toasty.LENGTH_SHORT).show();
+                    Toasty.error(context, response.errorBody().toString() + " " + response.code(), Toasty.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Sent_Response_register>> call, Throwable t) {
-                Toasty.error(getContext(), t.getMessage() + " ", Toasty.LENGTH_SHORT).show();
+                Toasty.error(context, t.getMessage() + " ", Toasty.LENGTH_SHORT).show();
             }
         });
     }

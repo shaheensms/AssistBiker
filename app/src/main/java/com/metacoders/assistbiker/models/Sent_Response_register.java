@@ -34,15 +34,6 @@ public class Sent_Response_register {
     public Sent_Response_register() {
     }
 
-    public Sent_Response_register(String customer_email, String customer_pass, String customer_contact, String customer_contact2, String customer_image, String customer_name, String customer_address) {
-        this.customer_email = customer_email;
-        this.customer_pass = customer_pass;
-        this.customer_contact = customer_contact;
-        this.customer_contact2 = customer_contact2;
-        this.customer_image = customer_image;
-        this.customer_name = customer_name;
-        this.customer_address = customer_address;
-    }
 
     public Sent_Response_register(String customer_id, String customer_email, String customer_pass, String customer_contact, String customer_contact2, String customer_image, String customer_name, String customer_address) {
         this.customer_id = customer_id;
@@ -54,6 +45,18 @@ public class Sent_Response_register {
         this.customer_name = customer_name;
         this.customer_address = customer_address;
     }
+
+    public Sent_Response_register(String customer_email, String customer_pass, String customer_contact, String customer_contact2, String customer_image, String customer_name, String customer_address) {
+        this.customer_email = customer_email;
+        this.customer_pass = customer_pass;
+        this.customer_contact = customer_contact;
+        this.customer_contact2 = customer_contact2;
+        this.customer_image = customer_image;
+        this.customer_name = customer_name;
+        this.customer_address = customer_address;
+    }
+
+
 
     public String getCustomer_email() {
         return customer_email;
