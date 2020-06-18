@@ -3,19 +3,22 @@ package com.metacoders.assistbiker.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.metacoders.assistbiker.ProfileEditDialog;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.api.api;
+import com.metacoders.assistbiker.models.Response_register;
 import com.metacoders.assistbiker.models.Sent_Response_register;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 
@@ -31,7 +34,7 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 
-public class ProfileFragment extends Fragment implements ProfileEditDialog.ProfileDialogListener {
+public class ProfileFragment extends Fragment {
 
     Context context;
     private View view;
@@ -86,7 +89,9 @@ public class ProfileFragment extends Fragment implements ProfileEditDialog.Profi
     }
 
     private void openDialog() {
-         TextInputEditText mName, mNumber, mEmail, mAddress;
+
+        TextInputEditText mName, mNumber, mEmail, mAddress;
+        Button mOk, mCancel;
 
         // creating a dialogue with custom design
         final Dialog profileDialogue = new Dialog(context);
@@ -97,17 +102,62 @@ public class ProfileFragment extends Fragment implements ProfileEditDialog.Profi
         mNumber = (TextInputEditText) profileDialogue.findViewById(R.id.phone);
         mEmail = (TextInputEditText) profileDialogue.findViewById(R.id.email);
         mAddress = (TextInputEditText) profileDialogue.findViewById(R.id.address);
+        mOk = (Button) profileDialogue.findViewById(R.id.ok_button);
+        mCancel = (Button) profileDialogue.findViewById(R.id.cancel_button);
 
         // Add button  on  design the use as normal ......
-
-
         profileDialogue.show();
 
+        mOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = mName.getText().toString();
+                String phone = mNumber.getText().toString();
+                String email = mEmail.getText().toString();
+                String address = mAddress.getText().toString();
 
+                mProfileNameTV.setText(name);
+                mProfileEmailTV.setText(email);
+                mUsernameTV.setText(name);
+                mUserPhoneTV.setText(phone);
+                mUserEmailTV.setText(email);
+                mUserAddressTV.setText(address);
 
+                profileDialogue.dismiss();
 
+                updateProfile(name, phone, email, address);
+            }
+        });
 
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileDialogue.dismiss();
+            }
+        });
+    }
 
+    private void updateProfile(String name, String phone, String email, String address) {
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(phone)) {
+            api api = ServiceGenerator.AllApi();
+
+            // build the model
+            Sent_Response_register response_register = new Sent_Response_register(email, "", phone, "null", "null", name, address);
+
+            Call<Response_register> updateCall = api.postUserUpdate(response_register);
+
+            updateCall.enqueue(new Callback<Response_register>() {
+                @Override
+                public void onResponse(Call<Response_register> call, Response<Response_register> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<Response_register> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
     private void loadProfile() {
@@ -163,13 +213,13 @@ public class ProfileFragment extends Fragment implements ProfileEditDialog.Profi
         mLogoutCard = view.findViewById(R.id.logout_card);
     }
 
-    @Override
-    public void updateText(String name, String phone, String email, String address) {
-        mProfileNameTV.setText(name);
-        mProfileEmailTV.setText(email);
-        mUsernameTV.setText(name);
-        mUserEmailTV.setText(email);
-        mUserPhoneTV.setText(phone);
-        mUserAddressTV.setText(address);
-    }
+//    @Override
+//    public void updateText(String name, String phone, String email, String address) {
+//        mProfileNameTV.setText(name);
+//        mProfileEmailTV.setText(email);
+//        mUsernameTV.setText(name);
+//        mUserEmailTV.setText(email);
+//        mUserPhoneTV.setText(phone);
+//        mUserAddressTV.setText(address);
+//    }
 }

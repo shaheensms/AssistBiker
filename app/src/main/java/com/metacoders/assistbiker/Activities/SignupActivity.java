@@ -1,13 +1,13 @@
 package com.metacoders.assistbiker.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.metacoders.assistbiker.R;
@@ -34,22 +34,19 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
     @NotEmpty
     @Email
     private TextInputEditText mailIn;
-    @NotEmpty
-    private TextInputEditText nameIn ;
-
-    @NotEmpty
-    @Length(min = 11   , max = 11  , message =  "Please Use Proper Phone Number")
-    private TextInputEditText mobileIn ;
+    Validator validator;
+    Button signUP;
 
     @NotEmpty
     @Password(min = 3, scheme = Password.Scheme.ANY)
     private TextInputEditText passIn;
+    @NotEmpty
+    private TextInputEditText nameIn;
+    @NotEmpty
+    @Length(min = 11, max = 11, message = "Please Use Proper Phone Number")
+    private TextInputEditText mobileIn;
 
-    Validator validator ;
-    Button signUP ;
-
-
-   //TextInputEditText nameIn , mobileIn    ;
+    //TextInputEditText nameIn , mobileIn    ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +54,11 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
         validator = new Validator(this);
         validator.setValidationListener(SignupActivity.this);
         getSupportActionBar().hide();
-        mailIn = findViewById(R.id.mail) ;
-        passIn = findViewById(R.id.pass) ;
-        nameIn = findViewById(R.id.name) ;
-        mobileIn = findViewById(R.id.ph) ;
-        signUP = findViewById(R.id.signUPBtn) ;
+        mailIn = findViewById(R.id.mail);
+        passIn = findViewById(R.id.pass);
+        nameIn = findViewById(R.id.name);
+        mobileIn = findViewById(R.id.ph);
+        signUP = findViewById(R.id.signUPBtn);
 
         signUP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +67,6 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
                 validator.validate();
             }
         });
-
-
-
 
 
     }
@@ -84,8 +78,7 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
 //              .show();
 
 
-
-      checkPhoneNumber() ;
+        checkPhoneNumber();
 
 
     }
@@ -97,16 +90,13 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
         dialog.show();
         dialog.setCancelable(false);
 
-        api  api = ServiceGenerator.AllApi() ;
+        api api = ServiceGenerator.AllApi();
 
 
+        Sent_Response_mobile model = new Sent_Response_mobile("+88" + mobileIn.getText().toString());
 
 
-
-        Sent_Response_mobile model = new Sent_Response_mobile( "+88" +mobileIn.getText().toString()) ;
-
-
-        Call<ResponseModel> chekNumber =  api.checkNumberValid(model) ;
+        Call<ResponseModel> chekNumber = api.checkNumberValid(model);
 
         chekNumber.enqueue(new Callback<ResponseModel>() {
             @Override
@@ -115,37 +105,29 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
 
                 dialog.dismiss();
 
-                if(response.code() == 200)
-                {
-                    ResponseModel model = response.body() ;
+                if (response.code() == 200) {
+                    ResponseModel model = response.body();
 
-                    if(model.getMsg().equals("user_exists"))
-                    {
-                        Toasty.error(getApplicationContext() , "Error : Phone Number  All Ready Exists  !!!", Toasty.LENGTH_LONG)
+                    if (model.getMsg().equals("user_exists")) {
+                        Toasty.error(getApplicationContext(), "Error : Phone Number  All Ready Exists  !!!", Toasty.LENGTH_LONG)
                                 .show();
 
-                    }
-                    else if (model.getMsg().equals("false"))
-                    {
-                        Intent i = new Intent( getApplicationContext() ,  OTPActivity.class) ;
-                        i.putExtra("NAME",nameIn.getText().toString() ) ;
-                        i.putExtra("PASS",passIn.getText().toString() ) ;
-                        i.putExtra("MAIL",mailIn.getText().toString() ) ;
-                        i.putExtra("NUM",mobileIn.getText().toString()  ) ;
+                    } else if (model.getMsg().equals("false")) {
+                        Intent i = new Intent(getApplicationContext(), OTPActivity.class);
+                        i.putExtra("NAME", nameIn.getText().toString());
+                        i.putExtra("PASS", passIn.getText().toString());
+                        i.putExtra("MAIL", mailIn.getText().toString());
+                        i.putExtra("NUM", mobileIn.getText().toString());
                         startActivity(i);
 
-                    }
-                    else
-                    {
-                        Toasty.error(getApplicationContext() , "Error :  Something Went Wrong Try Again !!!", Toasty.LENGTH_LONG)
+                    } else {
+                        Toasty.error(getApplicationContext(), "Error :  Something Went Wrong Try Again !!!", Toasty.LENGTH_LONG)
                                 .show();
 
                     }
 
-                }
-                else
-                {
-                    Toasty.error(getApplicationContext() , "Error : " + response.code() , Toasty.LENGTH_LONG)
+                } else {
+                    Toasty.error(getApplicationContext(), "Error : " + response.code(), Toasty.LENGTH_LONG)
                             .show();
                 }
 
@@ -155,14 +137,10 @@ public class SignupActivity extends AppCompatActivity implements Validator.Valid
             public void onFailure(Call<ResponseModel> call, Throwable t) {
 
                 dialog.dismiss();
-                Toasty.error(getApplicationContext() , "Error : " + t.getMessage() , Toasty.LENGTH_LONG)
+                Toasty.error(getApplicationContext(), "Error : " + t.getMessage(), Toasty.LENGTH_LONG)
                         .show();
             }
         });
-
-
-
-
 
 
     }
