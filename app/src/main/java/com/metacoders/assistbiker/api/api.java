@@ -68,4 +68,7 @@ public interface api {
     @POST("customers/update_user")
     Call<Response_register> postUserUpdate(@Body Sent_Response_register body);
 
+    @GET("products/search/{query}")
+    Call<List<ProductsModel>> searchProduct(@Path("query") String query);
+
 }

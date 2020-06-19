@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private TextView mPiEditTV, mCiEditTV, mAdEditTV;
     private TextView mUsernameTV, mUserPhoneTV, mUserEmailTV, mUserAddressTV;
     private List<Sent_Response_register> profileInfoList = new ArrayList<>();
-    String oldPassword  , oldImage , oldeName  ;
+    String oldPassword, oldImage, oldeName;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -91,21 +91,28 @@ public class ProfileFragment extends Fragment {
 
     private void openDialog() {
 
-        TextInputEditText mName, mNumber, mEmail, mAddress , mNumber2 ;
+        TextInputEditText mName, mNumber, mEmail, mAddress, mNumber2;
         Button mOk, mCancel;
+        Sent_Response_register profile = profileInfoList.get(0);
 
         // creating a dialogue with custom design
         final Dialog profileDialogue = new Dialog(context);
         profileDialogue.requestWindowFeature(Window.FEATURE_NO_TITLE);
         profileDialogue.setContentView(R.layout.dialog_profile_information);
 
-        mName = (TextInputEditText) profileDialogue.findViewById(R.id.name);
-        mNumber = (TextInputEditText) profileDialogue.findViewById(R.id.phone);
-        mEmail = (TextInputEditText) profileDialogue.findViewById(R.id.email);
-        mAddress = (TextInputEditText) profileDialogue.findViewById(R.id.address);
-        mNumber2 = profileDialogue.findViewById(R.id.phone2) ;
-        mOk = (Button) profileDialogue.findViewById(R.id.ok_button);
-        mCancel = (Button) profileDialogue.findViewById(R.id.cancel_button);
+        mName = profileDialogue.findViewById(R.id.name);
+        mNumber = profileDialogue.findViewById(R.id.phone);
+        mEmail = profileDialogue.findViewById(R.id.email);
+        mAddress = profileDialogue.findViewById(R.id.address);
+        mNumber2 = profileDialogue.findViewById(R.id.phone2);
+        mOk = profileDialogue.findViewById(R.id.ok_button);
+        mCancel = profileDialogue.findViewById(R.id.cancel_button);
+
+        mName.setText(profile.getCustomer_name());
+        mEmail.setText(profile.getCustomer_email());
+        mNumber.setText(profile.getCustomer_contact());
+        mNumber2.setText(profile.getCustomer_contact2());
+        mAddress.setText(profile.getCustomer_address());
 
         // Add button  on  design the use as normal ......
         profileDialogue.show();
@@ -117,7 +124,7 @@ public class ProfileFragment extends Fragment {
                 String phone = mNumber.getText().toString();
                 String email = mEmail.getText().toString();
                 String address = mAddress.getText().toString();
-                String phone2 = mNumber2.getText().toString() ;
+                String phone2 = mNumber2.getText().toString();
 
 
                 mProfileNameTV.setText(name);
@@ -149,7 +156,7 @@ public class ProfileFragment extends Fragment {
 
             // build the model
             // TODO customer id HERE
-           Sent_Response_register response_register = new Sent_Response_register("2",email , oldPassword, phone, phone2 ,  oldImage, name, address);
+            Sent_Response_register response_register = new Sent_Response_register("2", email, oldPassword, phone, phone2, oldImage, name, address);
 
             Call<Response_register> updateCall = api.postUserUpdate(response_register);
 
@@ -157,38 +164,33 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Response_register> call, Response<Response_register> response) {
 
-                    if(response.isSuccessful() && response.code() == 200)
-                    {
+                    if (response.isSuccessful() && response.code() == 200) {
 
-                        Response_register responseRegister = response.body() ;
+                        Response_register responseRegister = response.body();
 
 
-                        if(responseRegister.getMsg().equals("successfull"))
-                        {
+                        if (responseRegister.getMsg().equals("successfull")) {
 
-                            Toasty.success(context , "Profile Updated !!", Toasty.LENGTH_SHORT).show();
+                            Toasty.success(context, "Profile Updated !!", Toasty.LENGTH_SHORT).show();
 
-                        }
-                        else
-                        {
+                        } else {
                             // something went wrong !!!
-                            Toasty.error(context , "Something Error  !!", Toasty.LENGTH_SHORT).show();
-                            Log.d("TAG", "onResponse: " +  response.errorBody());
+                            Toasty.error(context, "Something Error  !!", Toasty.LENGTH_SHORT).show();
+                            Log.d("TAG", "onResponse: " + response.errorBody());
                         }
 
 
-                    }
-                    else {
+                    } else {
 
 
-                        Log.d("TAG", "onResponse: " +  response.errorBody());
+                        Log.d("TAG", "onResponse: " + response.errorBody());
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<Response_register> call, Throwable t) {
-                    Log.d("TAG", "onResponse: " +  t.getMessage());
+                    Log.d("TAG", "onResponse: " + t.getMessage());
                 }
             });
         }
@@ -214,9 +216,9 @@ public class ProfileFragment extends Fragment {
                     mUserEmailTV.setText(profile.getCustomer_email());
                     mUserPhoneTV.setText(profile.getCustomer_contact());
                     mUserAddressTV.setText(profile.getCustomer_address());
-                    oldPassword = profile.getCustomer_pass() ;
-                    oldImage = profile.getCustomer_image() ;
-                    oldeName = profile.getCustomer_name() ;
+                    oldPassword = profile.getCustomer_pass();
+                    oldImage = profile.getCustomer_image();
+                    oldeName = profile.getCustomer_name();
 
 
                     Log.d(TAG, "onResponse: Profile" + profileInfoList.toString());

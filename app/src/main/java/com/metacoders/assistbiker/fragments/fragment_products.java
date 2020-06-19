@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.SearchActivity;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
@@ -33,6 +35,7 @@ public class fragment_products extends Fragment {
 
     private Animator spruceAnimator;
     View view;
+    private EditText mSearchEd;
     private RecyclerView productRecyclerView;
     private GridLayoutManager gridLayoutManager;
     private ProductsAdapter adapter;
@@ -50,6 +53,7 @@ public class fragment_products extends Fragment {
         loadProducts();
 
         productRecyclerView = view.findViewById(R.id.products_recyclerview);
+        mSearchEd = view.findViewById(R.id.search_ed);
         productRecyclerView.setHasFixedSize(true);
 
         itemClickListenter = new ProductsAdapter.ItemClickListenter() {
@@ -64,6 +68,15 @@ public class fragment_products extends Fragment {
                 startActivity(i);
             }
         };
+
+        mSearchEd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
