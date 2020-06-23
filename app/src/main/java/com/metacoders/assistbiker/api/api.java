@@ -1,5 +1,6 @@
 package com.metacoders.assistbiker.api;
 
+import com.metacoders.assistbiker.models.CategoryResponseModel;
 import com.metacoders.assistbiker.models.NewsFeedModel;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.models.ResponseModel;
@@ -70,5 +71,8 @@ public interface api {
 
     @GET("products/search/{query}")
     Call<List<ProductsModel>> searchProduct(@Path("query") String query);
+
+    @GET("products/category")
+    Call<List<CategoryResponseModel>> getCategory();
 
 }

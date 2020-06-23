@@ -16,9 +16,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.metacoders.assistbiker.Activities.ProductDetailActivity;
-import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Activities.SearchActivity;
+import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.adapter.CategoryAdapter;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
+import com.metacoders.assistbiker.models.CategoryResponseModel;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 
@@ -31,16 +33,19 @@ import retrofit2.Response;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class fragment_products extends Fragment {
+public class ProductsFragment extends Fragment {
 
     private Animator spruceAnimator;
     View view;
     private EditText mSearchEd;
-    private RecyclerView productRecyclerView;
+    private RecyclerView productRecyclerView, categoryRecyclerView;
     private GridLayoutManager gridLayoutManager;
     private ProductsAdapter adapter;
+    private CategoryAdapter cAdapter;
     ProductsAdapter.ItemClickListenter itemClickListenter;
+    private CategoryAdapter.ItemClickListener catItemClickListener;
     private List<ProductsModel> productsList = new ArrayList<>();
+    private List<CategoryResponseModel> categoryList = new ArrayList<>();
     GridLayoutManager linearLayoutManagefr;
     Context context;
 
@@ -50,11 +55,21 @@ public class fragment_products extends Fragment {
         context = view.getContext();
 
         // Inflate the layout for this fragment
+        loadCategories();
         loadProducts();
 
         productRecyclerView = view.findViewById(R.id.products_recyclerview);
+        categoryRecyclerView = view.findViewById(R.id.category_recyclerview);
         mSearchEd = view.findViewById(R.id.search_ed);
         productRecyclerView.setHasFixedSize(true);
+        categoryRecyclerView.setHasFixedSize(true);
+
+        catItemClickListener = new CategoryAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int pos) {
+
+            }
+        };
 
         itemClickListenter = new ProductsAdapter.ItemClickListenter() {
             @Override
@@ -80,6 +95,28 @@ public class fragment_products extends Fragment {
         return view;
     }
 
+    private void loadCategories() {
+
+        Call<List<CategoryResponseModel>> call = ServiceGenerator
+                .AllApi()
+                .getCategory();
+
+        call.enqueue(new Callback<List<CategoryResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<CategoryResponseModel>> call, Response<List<CategoryResponseModel>> response) {
+                categoryList = response.body();
+                cAdapter = new CategoryAdapter(getActivity(), categoryList, catItemClickListener);
+                gridLayoutManager = new GridLayoutManager(getContext(), 5);
+                categoryRecyclerView.setLayoutManager(gridLayoutManager);
+                categoryRecyclerView.setAdapter(cAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<CategoryResponseModel>> call, Throwable t) {
+                Log.d(TAG, "onResponse: " + t.toString());
+            }
+        });
+    }
 
     private void loadProducts() {
 
@@ -132,6 +169,7 @@ public class fragment_products extends Fragment {
             }
         });
     }
+
 
     @Override
     public void onResume() {
