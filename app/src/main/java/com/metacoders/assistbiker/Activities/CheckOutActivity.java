@@ -1,9 +1,8 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -19,12 +18,11 @@ import androidx.room.Room;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.metacoders.assistbiker.Activities.MainActivity;
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.CartRecylerViewAdapter_For_Fragment;
 import com.metacoders.assistbiker.adapter.checkOutCartAdapter;
 import com.metacoders.assistbiker.api.api;
 import com.metacoders.assistbiker.database.CartDatabase;
-import com.metacoders.assistbiker.fragments.fragment_cart;
 import com.metacoders.assistbiker.models.CartDbModel;
 import com.metacoders.assistbiker.models.Response_register;
 import com.metacoders.assistbiker.models.Sent_Response_cart;

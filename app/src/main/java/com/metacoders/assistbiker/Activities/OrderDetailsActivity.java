@@ -1,4 +1,4 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.OldCartRecylerViewAdapter;
 import com.metacoders.assistbiker.models.CartModel;
 

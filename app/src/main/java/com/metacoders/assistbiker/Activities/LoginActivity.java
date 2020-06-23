@@ -40,7 +40,20 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerBtn) ;
 
 
+
         utilities = new Utilities() ;
+
+       int a =  utilities.isUserSignedIn(getApplicationContext()) ;
+
+       if(a>0)
+       {
+           Toasty.success(getApplicationContext(), "User ALREADY SIGNED INN !!!" , Toasty.LENGTH_SHORT).show();
+       }
+       else
+       {
+           Toasty.error(getApplicationContext(), "Plz Log IN !!!" , Toasty.LENGTH_SHORT).show();
+
+       }
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String mail  = mailIn.getText().toString() ;
+                String mail  = "+88"+ mailIn.getText().toString() ;
                 String pass = passIn.getText().toString() ;
 
 
@@ -112,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                .show();
 
 
-                        SaveTheUser() ;
+                        SaveTheUser(responsee.getCustomer_id()+"" , responsee.getCustomer_name() ,pass ,mail ) ;
 
 
                         }
@@ -157,14 +170,19 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void SaveTheUser() {
+    private void SaveTheUser(  String customer_id , String customer_name, String pass , String number) {
 
         // here saving the user in shared prefs
 
+        Toasty.success(getApplicationContext() , "LOGGED IN", Toasty.LENGTH_LONG  , false)
+                .show();
+        //Context context , String number , String pass ,   int user_id , String name
+        utilities.createUser(getApplicationContext() , number,pass,Integer.parseInt(customer_id) , customer_name);
 
-        Intent o = new Intent(getApplicationContext() , MainActivity.class) ;
-        startActivity(o);
-        finish();
+
+     //   Intent o = new Intent(getApplicationContext() , MainActivity.class) ;
+     //   startActivity(o);
+       // finish();
 
 
 

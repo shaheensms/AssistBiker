@@ -1,8 +1,10 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.metacoders.assistbiker.R;
 
 public class EmergencyFuelActivity extends AppCompatActivity {
 

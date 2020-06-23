@@ -1,24 +1,19 @@
 package com.metacoders.assistbiker.adapter;
 
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.metacoders.assistbiker.Activities.CartActivity;
-import com.metacoders.assistbiker.CheckOutActivity;
+import com.metacoders.assistbiker.Activities.CheckOutActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.Utils.Utilities;
@@ -27,8 +22,6 @@ import com.metacoders.assistbiker.models.CartDbModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public  class checkOutCartAdapter extends RecyclerView.Adapter <checkOutCartAdapter.ViewHolder> {
 

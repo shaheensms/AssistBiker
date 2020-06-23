@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.R;
-import com.metacoders.assistbiker.SearchActivity;
+import com.metacoders.assistbiker.Activities.SearchActivity;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
 import com.metacoders.assistbiker.models.ProductsModel;
 import com.metacoders.assistbiker.requests.ServiceGenerator;

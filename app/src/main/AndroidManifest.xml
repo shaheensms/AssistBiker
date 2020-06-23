@@ -11,14 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".Activities.SearchActivity"
+
+            android:theme="@style/AppThemeNoAction">
+
+        </activity>
         <activity
-            android:name=".PreviousOrdersListActivity"
-            android:theme="@style/AppThemeNoAction"></activity>
-        <activity android:name=".AddressPaymentActivity" />
-        <activity android:name=".CheckOutActivity" />
-        <activity android:name=".OrderDetailsActivity" />
-        <activity android:name=".EmergencyFuelActivity" />
+            android:name=".Activities.PreviousOrdersListActivity"
+            android:theme="@style/AppThemeNoAction">
+
+        </activity>
+        <activity android:name=".Activities.AddressPaymentActivity" />
+        <activity android:name=".Activities.CheckOutActivity" />
+        <activity android:name=".Activities.OrderDetailsActivity" />
+        <activity android:name=".Activities.EmergencyFuelActivity" />
         <activity android:name=".Activities.NewsDetailsActivity" />
         <activity
             android:name=".Activities.CartActivity"

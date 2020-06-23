@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.metacoders.assistbiker.OrderDetailsActivity;
+import com.metacoders.assistbiker.Activities.OrderDetailsActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.CartModel;
 import com.metacoders.assistbiker.models.Sent_Response_cart;

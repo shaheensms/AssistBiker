@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
-import com.metacoders.assistbiker.CheckOutActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.CartRecylerViewAdapter;
 import com.metacoders.assistbiker.database.CartDatabase;
@@ -24,8 +22,6 @@ import com.metacoders.assistbiker.models.CartDbModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 
 public class CartActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.models.zoneResponse;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
 

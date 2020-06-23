@@ -1,4 +1,4 @@
-package com.metacoders.assistbiker;
+package com.metacoders.assistbiker.Activities;
 
 import android.os.Bundle;
 
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.PastOrderListAdapter;
 import com.metacoders.assistbiker.models.Sent_Response_cart;
 import com.metacoders.assistbiker.requests.ServiceGenerator;
