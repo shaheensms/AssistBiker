@@ -50,7 +50,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 .load(Constants.IMAGE_URL + category.getP_cat_image())
                 .thumbnail(0.25f)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.drawable.placeholder)
                 .into(holder.cImage);
     }
 
