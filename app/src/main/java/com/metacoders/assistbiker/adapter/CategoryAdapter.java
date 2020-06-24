@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -66,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         ImageView cImage;
         TextView cName;
-        CardView cardView;
+        LinearLayout mLinearLayout;
         ItemClickListener itemClickListener;
 
         public ViewHolder(@NonNull View itemView, ItemClickListener itemClickListener) {
@@ -74,10 +74,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
             cImage = itemView.findViewById(R.id.category_image);
             cName = itemView.findViewById(R.id.category_text);
-            cardView = itemView.findViewById(R.id.category_card);
+            mLinearLayout = itemView.findViewById(R.id.cat_wrap_linearlayout);
 
             this.itemClickListener = itemClickListener;
-            cardView.setOnClickListener(this);
+            mLinearLayout.setOnClickListener(this);
         }
 
         @Override

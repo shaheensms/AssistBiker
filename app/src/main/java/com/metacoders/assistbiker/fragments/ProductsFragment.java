@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.Activities.SearchActivity;
+import com.metacoders.assistbiker.CategoryProductActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.CategoryAdapter;
 import com.metacoders.assistbiker.adapter.ProductsAdapter;
@@ -67,7 +68,12 @@ public class ProductsFragment extends Fragment {
         catItemClickListener = new CategoryAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int pos) {
-
+                Intent i = new Intent(context, CategoryProductActivity.class);
+                CategoryResponseModel singleCategory = new CategoryResponseModel();
+                singleCategory = categoryList.get(pos);
+                i.putExtra("Category", singleCategory);
+                //  Toasty.warning(context , singleProduct.getProduct_title() , Toasty.LENGTH_SHORT).show();
+                startActivity(i);
             }
         };
 

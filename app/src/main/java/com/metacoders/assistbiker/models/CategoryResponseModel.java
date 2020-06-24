@@ -3,7 +3,9 @@ package com.metacoders.assistbiker.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CategoryResponseModel {
+import java.io.Serializable;
+
+public class CategoryResponseModel implements Serializable {
     @Expose
     @SerializedName("p_cat_id")
     private String p_cat_id;

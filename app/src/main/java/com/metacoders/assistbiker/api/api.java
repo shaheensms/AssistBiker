@@ -75,4 +75,6 @@ public interface api {
     @GET("products/category")
     Call<List<CategoryResponseModel>> getCategory();
 
+    @GET("products/by_category/{catID}")
+    Call<List<ProductsModel>> getCategoryProducts(@Path("catID") String catID);
 }
