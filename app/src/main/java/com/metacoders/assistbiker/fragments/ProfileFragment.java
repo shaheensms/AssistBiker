@@ -2,6 +2,7 @@ package com.metacoders.assistbiker.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +17,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.metacoders.assistbiker.Activities.PreviousOrdersListActivity;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.Utils.Utilities;
 import com.metacoders.assistbiker.api.api;
 import com.metacoders.assistbiker.models.Response_register;
 import com.metacoders.assistbiker.models.Sent_Response_register;
@@ -45,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private TextView mUsernameTV, mUserPhoneTV, mUserEmailTV, mUserAddressTV;
     private List<Sent_Response_register> profileInfoList = new ArrayList<>();
     String oldPassword, oldImage, oldeName;
+    Utilities utilities;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -59,7 +63,21 @@ public class ProfileFragment extends Fragment {
         context = view.getContext();
 
         initializations();
-        loadProfile();
+        utilities = new Utilities();
+
+        int user_id =  utilities.isUserSignedIn(context) ;
+
+        if(user_id != 0)
+        {
+            loadProfile(user_id);
+            Log.d("TAG", "onCreate:  USER ID " + user_id);
+        }
+        else
+        {
+            Toasty.error(context , "Please Sign in Again !!!"  , Toasty.LENGTH_SHORT).show();
+        }
+
+
         onclickActions();
 
         return view;
@@ -196,10 +214,10 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void loadProfile() {
+    private void loadProfile(int user_id) {
         Call<List<Sent_Response_register>> call = ServiceGenerator
                 .AllApi()
-                .getProfile(2); // TODO change the id of the user
+                .getProfile(user_id); // TODO change the id of the user
 
 
         call.enqueue(new Callback<List<Sent_Response_register>>() {
@@ -252,6 +270,16 @@ public class ProfileFragment extends Fragment {
         mNotificationsCard = view.findViewById(R.id.notification_card);
         mChangePassCard = view.findViewById(R.id.change_pass_card);
         mLogoutCard = view.findViewById(R.id.logout_card);
+
+
+
+        mMyOrdersCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent p = new Intent(getContext() , PreviousOrdersListActivity.class);
+                startActivity(p);
+            }
+        });
     }
 
 //    @Override
@@ -263,4 +291,7 @@ public class ProfileFragment extends Fragment {
 //        mUserPhoneTV.setText(phone);
 //        mUserAddressTV.setText(address);
 //    }
+
+
+
 }

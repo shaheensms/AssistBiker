@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.metacoders.assistbiker.Activities.ProductDetailActivity;
 import com.metacoders.assistbiker.Activities.SearchActivity;
 import com.metacoders.assistbiker.CategoryProductActivity;
@@ -48,6 +49,7 @@ public class ProductsFragment extends Fragment {
     private List<ProductsModel> productsList = new ArrayList<>();
     private List<CategoryResponseModel> categoryList = new ArrayList<>();
     GridLayoutManager linearLayoutManagefr;
+    private ShimmerFrameLayout mShimmerViewContainer;
     Context context;
 
     @Override
@@ -61,6 +63,7 @@ public class ProductsFragment extends Fragment {
 
         productRecyclerView = view.findViewById(R.id.products_recyclerview);
         categoryRecyclerView = view.findViewById(R.id.category_recyclerview);
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         mSearchEd = view.findViewById(R.id.search_ed);
         productRecyclerView.setHasFixedSize(true);
         categoryRecyclerView.setHasFixedSize(true);
@@ -163,6 +166,8 @@ public class ProductsFragment extends Fragment {
                             }
                     );
 
+                    mShimmerViewContainer.stopShimmer();
+                    mShimmerViewContainer.setVisibility(View.GONE);
 //                    Log.d(TAG, "onResponse: Products are" + productsList.toString());
                 } else {
                     Log.d(TAG, "onResponse: ERROR ");
@@ -180,6 +185,12 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        mShimmerViewContainer.startShimmer();
+    }
 
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmer();
+        super.onPause();
     }
 }

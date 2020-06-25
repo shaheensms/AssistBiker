@@ -102,6 +102,9 @@ dependencies {
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+   
+    // shimmer view
+    implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
 
 
 

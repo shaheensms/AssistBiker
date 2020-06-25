@@ -1,12 +1,14 @@
 package com.metacoders.assistbiker.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.metacoders.assistbiker.Activities.SearchActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Constants;
 import com.metacoders.assistbiker.adapter.NewsFeedAdapter;
@@ -50,6 +54,9 @@ public class fragment_newsfeed extends Fragment {
     private List<NewsFeedModel> newsfeedList = new ArrayList<>();
     private List<ProductsModel> productsList = new ArrayList<>();
     NewsFeedAdapter.ItemClickListenter itemClickListenter;
+    private ShimmerFrameLayout mShimmerViewContainer;
+    TextView sellAllView ;
+
     private Context context;
 
     @Override
@@ -60,6 +67,8 @@ public class fragment_newsfeed extends Fragment {
 
         newsRecyclerView = view.findViewById(R.id.news_feed_recyclerview);
         trendRecyclerView = view.findViewById(R.id.trending_news_feed_recyclerview);
+        sellAllView = view.findViewById(R.id.see_all) ;
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         newsRecyclerView.setHasFixedSize(true);
         trendRecyclerView.setHasFixedSize(true);
 
@@ -89,6 +98,18 @@ public class fragment_newsfeed extends Fragment {
         });
 
         //test()  ;
+
+        sellAllView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent p = new Intent(getContext() , SearchActivity.class);
+                startActivity(p);
+
+            }
+        });
+
+
         loadTrend();
         loadNews();
 
@@ -256,6 +277,8 @@ public class fragment_newsfeed extends Fragment {
                     trendRecyclerView.setNestedScrollingEnabled(true);
                     trendRecyclerView.setAdapter(adapter);
 
+                    mShimmerViewContainer.stopShimmer();
+                    mShimmerViewContainer.setVisibility(View.GONE);
                 }
             }
 
@@ -267,5 +290,20 @@ public class fragment_newsfeed extends Fragment {
 
 
     }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmer();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmer();
+        super.onPause();
+    }
+
 
 }
