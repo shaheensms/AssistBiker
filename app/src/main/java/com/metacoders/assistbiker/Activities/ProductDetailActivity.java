@@ -168,8 +168,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent o = new Intent(getApplicationContext() , CartActivity.class);
-                startActivity(o);
+//                Intent o = new Intent(getApplicationContext() , CartActivity.class);
+//                startActivity(o);.
+
+                Intent p = new Intent(getApplicationContext() , AddressPaymentActivity.class);
+                startActivity(p);
 
             }
         });

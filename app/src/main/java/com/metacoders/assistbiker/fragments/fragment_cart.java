@@ -3,6 +3,7 @@ package com.metacoders.assistbiker.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.google.android.material.button.MaterialButton;
+import com.metacoders.assistbiker.Activities.AddressPaymentActivity;
 import com.metacoders.assistbiker.Activities.CartActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.CartRecylerViewAdapter;
@@ -44,7 +47,7 @@ public class fragment_cart  extends Fragment {
     ArrayList<CartDbModel> cartList = new ArrayList<>();
     Activity activity ;
     CardView cartContainer  ;
-
+    MaterialButton checkOutBtn ;
     LinearLayout emptyLayout  ;
 
     @Override
@@ -58,11 +61,23 @@ public class fragment_cart  extends Fragment {
         cartRecylerview = view.findViewById(R.id.cartList ) ;
         TotalTextView = view.findViewById(R.id.totalView) ;
         emptyLayout = view.findViewById(R.id.emptyView) ;
+        checkOutBtn = view.findViewById(R.id.checkOutBtnCart);
         cartContainer = view.findViewById(R.id.cartContainer) ;
         emptyLayout.setVisibility(View.GONE);
 
         cartRecylerview.setLayoutManager(new LinearLayoutManager(context));
 
+
+        checkOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent p = new Intent(context , AddressPaymentActivity.class);
+                startActivity(p);
+
+
+            }
+        });
 
 
         loadAllCartItem();

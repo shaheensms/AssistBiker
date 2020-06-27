@@ -17,7 +17,9 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.metacoders.assistbiker.Activities.LoginActivity;
 import com.metacoders.assistbiker.Activities.PreviousOrdersListActivity;
+import com.metacoders.assistbiker.Activities.SignupActivity;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.Utils.Utilities;
 import com.metacoders.assistbiker.api.api;
@@ -105,6 +107,8 @@ public class ProfileFragment extends Fragment {
                 openDialog();
             }
         });
+
+
     }
 
     private void openDialog() {
@@ -278,6 +282,18 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent p = new Intent(getContext() , PreviousOrdersListActivity.class);
                 startActivity(p);
+            }
+        });
+
+        mLogoutCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                utilities.deleteExistingUSER(context);
+                Intent i = new Intent(context, LoginActivity.class) ;
+                startActivity(i);
+
+
             }
         });
     }

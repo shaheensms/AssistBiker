@@ -12,16 +12,27 @@ public class Response_login {
     @SerializedName("customer_image")  private  String  customer_image  ;
     @Expose
     @SerializedName("customer_id")  private  String  customer_id  ;
+    @Expose
+    @SerializedName("customer_address")  private  String  customer_address  ;
 
 
     public Response_login() {
     }
 
-    public Response_login(String msg, String customer_name, String customer_image, String customer_id) {
+    public Response_login(String msg, String customer_name, String customer_image, String customer_id, String customer_address) {
         this.msg = msg;
         this.customer_name = customer_name;
         this.customer_image = customer_image;
         this.customer_id = customer_id;
+        this.customer_address = customer_address;
+    }
+
+    public String getCustomer_address() {
+        return customer_address;
+    }
+
+    public void setCustomer_address(String customer_address) {
+        this.customer_address = customer_address;
     }
 
     public String getMsg() {

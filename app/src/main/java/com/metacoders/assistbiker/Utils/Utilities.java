@@ -43,23 +43,25 @@ public class Utilities {
         editor.putString("number","null");
         editor.putString("pass","null");
         editor.putString("name", "null");
+        editor.putString("address","");
         editor.putInt("user_id", 0);
         editor.apply();
 
         Log.d("TAG", "ReadExistingResname:  USER DELTED !!"  );
     }
 
-    public  void createUser(Context context , String number , String pass ,   int user_id , String name ){
+    public  void createUser(Context context , String number , String pass ,   int user_id , String name ,  String adress  ){
 
         SharedPreferences.Editor editor=getPrefs(context).edit();
         editor.putString("number",number);
         editor.putString("name",name);
         editor.putString("pass",pass);
+        editor.putString("address",adress);
         editor.putInt("user_id", user_id);
 
         editor.apply();
         Log.d("TAG", "ReadExistingResname: CREATED  USER DATA " );
-
+        Log.d("TAG", "ReadExistingResname: CREATED  USER adress "  + adress);
     }
 
     public  int  isUserSignedIn(Context context) {
@@ -78,6 +80,23 @@ public class Utilities {
               return  def  ;
 
          }
+    }
+
+    public  String getSavedAdress(Context context){
+
+        String Adress = getPrefs(context).getString("address","null");
+
+
+        if(!Adress.equals("null") ){
+            Log.d("TAG", "ReadExistingResname:  Address Found "+ Adress );
+            return Adress ;
+
+        }
+        else {
+            Log.d("TAG", "ReadExistingResname:  Address NOT FOUND  " );
+            return  "null"  ;
+
+        }
     }
 
 }

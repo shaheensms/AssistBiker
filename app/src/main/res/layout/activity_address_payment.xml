@@ -15,11 +15,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:orientation="vertical">
@@ -185,6 +189,7 @@ sadipscing elitr, sed diam nonumy eirmod tempo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
+        android:id="@+id/proceedToCheckOut"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         android:text="Next" />

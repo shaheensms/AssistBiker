@@ -246,6 +246,9 @@ public class fragment_newsfeed extends Fragment {
 //                        trendRecyclerView.setNestedScrollingEnabled(true);
 //                        trendRecyclerView.setAdapter(adapter);
 
+                    mShimmerViewContainer.stopShimmer();
+                    mShimmerViewContainer.setVisibility(View.GONE);
+
                     Log.d(TAG, "onResponse: feeds are" + newsfeedList.toString());
                 }
             }
@@ -277,8 +280,7 @@ public class fragment_newsfeed extends Fragment {
                     trendRecyclerView.setNestedScrollingEnabled(true);
                     trendRecyclerView.setAdapter(adapter);
 
-                    mShimmerViewContainer.stopShimmer();
-                    mShimmerViewContainer.setVisibility(View.GONE);
+
                 }
             }
 
