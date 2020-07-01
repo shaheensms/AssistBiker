@@ -3,6 +3,7 @@ package com.metacoders.assistbiker.Activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.metacoders.assistbiker.R;
+import com.metacoders.assistbiker.Utils.Utilities;
 import com.metacoders.assistbiker.adapter.CartRecylerViewAdapter_For_Fragment;
 import com.metacoders.assistbiker.adapter.checkOutCartAdapter;
 import com.metacoders.assistbiker.api.api;
@@ -43,30 +45,61 @@ public class CheckOutActivity extends AppCompatActivity {
     checkOutCartAdapter cartAdapter  ;
     CartRecylerViewAdapter_For_Fragment.ViewHolder viewHolder  ;
     public static TextView TotalTextView;
-    double toatalAmount = 0.0 ;
+    double toatalAmount = 0.0  ;
+    float dueAmount = 0;
     Context context ;
    List<CartDbModel> cartList = new ArrayList<>();
     Activity activity ;
     CardView cartContainer  ;
-    TextView totalView  ;
+    TextView totalView  , delivrly_charge_checkout_Tv , deliver_adress , payment_Type , contact_Number , totalProductPrice
+            , totalInvoice;
     LinearLayout emptyLayout  ;
     LinearLayoutManager linearLayoutManager ;
     MaterialButton placeOrder ;
+    Utilities utilities ;
+    int user_Id = 0 ;
 
 
+    String  dZone  , dAdress , pType;
+    float zoneCharge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
 
+        utilities = new Utilities() ;
+        user_Id = utilities.getuserID(getApplicationContext()) ;
+
+//        o.putExtra("deliveryZone" , zone) ;
+//        o.putExtra("zoneCharge", price) ;
+//        o.putExtra("deliverAddress",delivery_adress ) ;
+//        o.putExtra("paymentType",paymentMethod ) ;
+        Intent o = getIntent();
+        dZone = o.getStringExtra("deliveryZone") ;
+        dAdress = o.getStringExtra("deliverAddress") ;
+        pType =o.getStringExtra("paymentType");
+        zoneCharge = o.getFloatExtra("zoneCharge" , 0 );
+
+
          orderList = findViewById(R.id.listCartCheckOut) ;
          totalView = findViewById(R.id.totalView) ;
+         payment_Type = findViewById(R.id.paymentTypeINvoice) ;
          placeOrder = findViewById(R.id.place_order_btn);
+         totalProductPrice =findViewById(R.id.total_food_price_checkout);
+         deliver_adress = findViewById(R.id.deliveryLocationInvoice);
+         contact_Number = findViewById(R.id.mobileNumberViewINvoice);
+         totalInvoice = findViewById(R.id.totalinvoice);
+         contact_Number.setText(utilities.getSavedContacts(getApplicationContext()));
+         deliver_adress.setText(dAdress);
+         payment_Type.setText(pType);
+         delivrly_charge_checkout_Tv = findViewById(R.id.delivrly_charge_checkout) ;
 
          linearLayoutManager = new LinearLayoutManager(this );
          orderList.setLayoutManager(linearLayoutManager);
 
-        loadAllCartItem();
+         delivrly_charge_checkout_Tv.setText(zoneCharge+"");
+
+         loadAllCartItem();
 
 
         placeOrder.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +139,12 @@ public class CheckOutActivity extends AppCompatActivity {
                     cartAdapter = new checkOutCartAdapter( CheckOutActivity.this ,todoList);
                     orderList.setAdapter(cartAdapter);
 
+                   double TOTAL =  calculateTotal(todoList) ;
+                    totalView.setText( TOTAL+ zoneCharge + " BDT");
+                    totalProductPrice.setText(TOTAL +"");
+                    totalInvoice.setText(TOTAL+ zoneCharge+"");
+                    dueAmount = (float) (TOTAL + zoneCharge);
 
-                    totalView.setText(calculateTotal(todoList) + " BDT");
                     toatalAmount = 0.0  ;
                     cartList = todoList ;
 
@@ -150,8 +187,8 @@ public class CheckOutActivity extends AppCompatActivity {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String orderList = gson.toJson(cartList); // all the order is in  This  String
         api api = ServiceGenerator.AllApi() ;
-        Sent_Response_cart dataModel = new Sent_Response_cart(2 , 1200 ,"12/3/2015" , "pending" ,"null",
-                "cartList" , orderList , "test","test","test","test" );
+        Sent_Response_cart dataModel = new Sent_Response_cart(user_Id , dueAmount ,utilities.getCurrentDate(), "pending" ,"null",
+                "Products" , orderList , pType,dZone,dAdress,"test" );
 
         Call<Response_register> response_Call = api.postCartList(dataModel) ;
 

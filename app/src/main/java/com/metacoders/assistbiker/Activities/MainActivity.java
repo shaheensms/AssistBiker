@@ -6,12 +6,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.metacoders.assistbiker.R;
 import com.metacoders.assistbiker.adapter.viewPager2_adapter;
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView ;
     ImageView hamburger ;
     ViewPager2 viewPager ;
+    FloatingActionButton emergencyFuel ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +35,22 @@ public class MainActivity extends AppCompatActivity {
         final BottomNavigationView navigationBar = findViewById(R.id.bottom_navigation_) ;
         viewPager = findViewById(R.id.view_pager) ;
         drawerLayout = findViewById(R.id.drawer_layout);
+        emergencyFuel = findViewById(R.id.floating_action_button) ;
+
        // navigationView = findViewById(R.id.navigation_view);
         navigationBar.setOnNavigationItemSelectedListener(navigationItemSelectedListener) ;
         // getSupportFragmentManager().beginTransaction().replace(R.id.view_pager, new dashboardFragment()).commit();
        viewPager.setAdapter(new viewPager2_adapter(MainActivity.this));
 
+       emergencyFuel.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               Intent o = new Intent(getApplicationContext()  , EmergencyFuelActivity.class);
+               startActivity(o);
+
+           }
+       });
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

@@ -35,7 +35,7 @@ import static com.metacoders.assistbiker.R.drawable.ic_baseline_radio_button_unc
 public class AddressPaymentActivity extends AppCompatActivity {
 
     NiceSpinner zoneSpinner, paymentSpinner;
-    String paymentMethod;
+    String paymentMethod= "Cash On Delivery" ;;
     private CardView mCashOnCard, mBkashCard;
     private TextView mCashOnTV, mBkashTV;
     private List<zoneResponse> zoneList = new ArrayList<>();

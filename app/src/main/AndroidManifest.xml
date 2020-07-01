@@ -37,7 +37,9 @@
 
         </activity>
         <activity android:name=".Activities.AddressPaymentActivity" />
-        <activity android:name=".Activities.CheckOutActivity" />
+        <activity android:name=".Activities.CheckOutActivity"
+            android:theme="@style/AppThemeNoAction"
+            />
         <activity android:name=".Activities.OrderDetailsActivity" />
         <activity android:name=".Activities.EmergencyFuelActivity" />
         <activity android:name=".Activities.NewsDetailsActivity" />

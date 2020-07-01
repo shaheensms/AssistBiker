@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 import com.metacoders.assistbiker.models.CartDbModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -14,7 +17,7 @@ import es.dmoral.toasty.Toasty;
 public class Utilities {
 
     public static SharedPreferences getPrefs(Context context){
-        return  context.getSharedPreferences("USER",Context.MODE_PRIVATE);
+        return  context.getSharedPreferences("USER", Context.MODE_PRIVATE);
     }
 
     public  void  showMsg(Context context , String msg ) {
@@ -99,4 +102,47 @@ public class Utilities {
         }
     }
 
+    public  String getSavedContacts(Context context){
+
+        String number = getPrefs(context).getString("number","null");
+
+
+        if(!number.equals("null") ){
+            Log.d("TAG", "ReadExistingResname:  Address Found "+ number );
+            return number ;
+
+        }
+        else {
+            Log.d("TAG", "ReadExistingResname:  Address NOT FOUND  " );
+            return  "null"  ;
+
+        }
+    }
+
+    public  int  getuserID(Context context){
+
+        int  number = getPrefs(context).getInt("user_id",0);
+
+
+        if(number !=0 ){
+            Log.d("TAG", "ReadExistingResname:  Address Found "+ number );
+            return number ;
+
+        }
+        else {
+            Log.d("TAG", "ReadExistingResname:  Address NOT FOUND  " );
+            return  0  ;
+
+        }
+    }
+
+    public  String getCurrentDate() {
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c);
+        return  formattedDate ;
+
+    }
 }
